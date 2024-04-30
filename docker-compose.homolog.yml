@@ -1,0 +1,40 @@
+version: "3.5"
+services:
+  homolog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=homologation
+    container_name: faithpoint-homolog
+    environment:
+      - POSTGRES_USER=faithpoint
+      - POSTGRES_PASSWORD=faithpoint
+      - POSTGRES_DB=faithpoint_homolog
+      - POSTGRES_HOST=faithpoint-db
+    ports:
+      - "3001:3000"
+    volumes:
+      - .:/app
+    networks:
+      - faithpoint-network
+    depends_on:
+      - faithpoint-db
+
+  faithpoint-db:
+    image: postgres:13.3-alpine
+    container_name: faithpoint-db
+    environment:
+      - POSTGRES_USER=faithpoint
+      - POSTGRES_PASSWORD=faithpoint
+      - POSTGRES_DB=faithpoint_homolog
+    volumes:
+      - faithpoint-db-data:/var/lib/postgresql/data
+    networks:
+      - faithpoint-network
+
+volumes:
+  faithpoint-db-data:
+
+networks:
+  faithpoint-network:
