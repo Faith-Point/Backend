@@ -12,6 +12,9 @@ build
 /coverage
 database.test.sqlite
 .env
+.env.development
+.env.production
+.env.homolog
 
 # Compiled Java class files
 *.class
