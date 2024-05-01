@@ -8,27 +8,25 @@ WORKDIR /app
 RUN apk add --no-cache python3 make g++ && \
     npm install -g yarn --force
 
+# Instala Yarn - verificação de versão para instalação condicional removida, assumindo que o ambiente será sempre preparado.
+RUN npm install -g yarn 
+RUN npm install -g typeorm
+
 # Copia os arquivos de configuração do projeto
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock tsconfig.json ./
 
-# Permite a definição do ambiente no momento da construção do contêiner
-ARG NODE_ENV=development
-ENV NODE_ENV=${NODE_ENV}
-
-# Instala as dependências usando Yarn baseando-se no ambiente
-RUN if [ "${NODE_ENV}" = "production" ]; then \
-    yarn install --frozen-lockfile --production; \
-    else yarn install --frozen-lockfile; \
-    fi
+# Instala as definições de tipo e dependências do projeto usando Yarn
+RUN yarn install --frozen-lockfile
 
 # Copia o código fonte do aplicativo
 COPY src /app/src
 
+# Listar os diretórios e arquivos para garantir que tudo está no lugar (Opcional, para debug)
+RUN ls -la /app
+RUN ls -la /app/src
+
 # Compila a aplicação
 RUN yarn build
-
-# Instala TypeORM globalmente para permitir a execução das migrations
-RUN yarn global add typeorm
 
 # Expõe a porta 3000 para acesso ao servidor
 EXPOSE 3000

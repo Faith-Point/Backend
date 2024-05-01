@@ -4,7 +4,7 @@
 	"port": 5432,
 	"username": "postgres",
 	"password": "postgres",
-	"database": "entrypoint",
+	"database": "faith-point",
 	"entities": [
 		"./src/modules/**/infra/typeorm/entities/*.ts",
 		"./src/modules/shared/**/infra/typeorm/entities/*.ts"
