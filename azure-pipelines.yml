@@ -1,21 +1,16 @@
 trigger:
-  - production
+- production
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - script: npm install
-    displayName: 'Install dependencies'
+- checkout: self  # Garante que o código é corretamente checado
 
-  - script: npm run build
-    displayName: 'Build'
+- script: npm install
+  displayName: 'Install dependencies'
 
-  - script: npm test
-    displayName: 'Run tests'
+- script: npm run build
+  displayName: 'Build'
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'drop'
-      publishLocation: 'container'
+- script: npm test
