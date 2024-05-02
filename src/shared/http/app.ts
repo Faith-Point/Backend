@@ -26,7 +26,6 @@ app.use(setupRoutes);
 
 CreateConnection.execute();
 
-// Error handling middleware
 app.use(async (error: Handler, request: express.Request, response: express.Response) => {
     logger.info('Handling error - App.ts');
     let handler = error;

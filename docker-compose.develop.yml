@@ -1,40 +1,48 @@
-version: "3.5"
+version: "3.8"
 services:
   development:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - NODE_ENV=development
     container_name: faithpoint-development
     environment:
-      - POSTGRES_USER=faithpoint
-      - POSTGRES_PASSWORD=faithpoint
-      - POSTGRES_DB=faithpoint_development
-      - POSTGRES_HOST=faithpoint-db
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_HOST=${DB_HOST}
+      - API_PORT=${API_PORT}
+      - API_SECRET=${API_SECRET}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - STRIPE_API_KEY=${STRIPE_API_KEY}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_PATH=${LOG_PATH}
     ports:
-      - "3000:3000"
+      - "3308:3308" 
     volumes:
       - .:/app
+      - /app/node_modules
     networks:
       - faithpoint-network
     depends_on:
-      - faithpoint-db
+      - faith-point
 
-  faithpoint-db:
+  faith-point:
     image: postgres:13.3-alpine
-    container_name: faithpoint-db
+    container_name: faith-point
     environment:
-      - POSTGRES_USER=faithpoint
-      - POSTGRES_PASSWORD=faithpoint
-      - POSTGRES_DB=faithpoint_development
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
-      - faithpoint-db-data:/var/lib/postgresql/data
+      - faith-point-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - faithpoint-network
 
-volumes:
-  faithpoint-db-data:
-
 networks:
   faithpoint-network:
+    driver: bridge
+
+volumes:
+  faith-point-data:
