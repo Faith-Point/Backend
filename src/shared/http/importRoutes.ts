@@ -1,7 +1,7 @@
-// import countryRouter from '@modules/shared/country/infra/http/routes/Country.routes';
+import countryRouter from '@modules/shared/country/infra/http/routes/Country.routes';
 
 const route = {
-    // countryRouter,
+    countryRouter,
 };
 
 export default route;

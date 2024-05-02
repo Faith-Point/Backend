@@ -25,6 +25,7 @@ services:
       - faithpoint-network
     depends_on:
       - faith-point
+    restart: on-failure  
 
   faith-point:
     image: postgres:13.3-alpine
@@ -39,6 +40,7 @@ services:
       - "5432:5432"
     networks:
       - faithpoint-network
+    restart: always  
 
 networks:
   faithpoint-network:
