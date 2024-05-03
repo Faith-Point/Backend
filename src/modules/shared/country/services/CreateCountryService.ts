@@ -44,6 +44,7 @@ class CreateCountryService {
     }
 
     return {
+      id: freshCountry.id,
       short_name: freshCountry.short_name,
       long_name: freshCountry.long_name,
       code: freshCountry.code,

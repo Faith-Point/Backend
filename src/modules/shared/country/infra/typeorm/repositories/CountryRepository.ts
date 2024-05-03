@@ -59,6 +59,7 @@ class CountryRepository implements ICountryRepository {
 
   private mapToIFindCountry(country: Country): IFindCountry {
     return {
+      id: country.id,
       short_name: country.short_name,
       long_name: country.long_name,
       code: country.code,

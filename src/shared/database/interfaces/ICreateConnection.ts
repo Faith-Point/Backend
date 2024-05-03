@@ -1,10 +1,10 @@
 interface IConnectionParameters {
-    name?: string;
+    name: string;
     type: string;
     host: string;
     port: string | number;
     database: string;
-    schema?: string;
+    schema: string;
     password: string;
     username: string;
   }

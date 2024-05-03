@@ -9,7 +9,7 @@ routes.put('/:id', countryController.update);
 routes.delete('/:id', countryController.delete);
 routes.get('/', countryController.findAll);
 routes.get('/:id', countryController.findById);
-routes.get('/findByCode', countryController.findByShortName);
+routes.get('/findByCode', countryController.findByCode);
 routes.get('/findByShortName', countryController.findByShortName);
 routes.get('/findByLongName', countryController.findByLongName);
 

@@ -71,6 +71,15 @@ class CountryController {
 
 		return response.json(output);
 	}
+	public async findByCode(request: Request, response: Response): Promise<Response> {
+		const service = container.resolve(FindCountryService);
+
+		const country = await service.findByCode(request.body);
+
+		const output = await ApiResponse.execute('findByCode returned', country);
+
+		return response.json(output);
+	}
 }
 
 export default CountryController;
