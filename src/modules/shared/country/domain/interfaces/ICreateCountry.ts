@@ -1,7 +1,7 @@
 import shortContry from '@shared/util/ShortCountry';
 
 interface ICreateCountry {
-  id: string;
+  	id: string;
 	short_name?: shortContry;
 	long_name?: string;
 	code?: string;

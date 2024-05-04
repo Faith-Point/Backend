@@ -25,8 +25,8 @@ describe('FindCountryService', () => {
   describe('findAll', () => {
     it('should return an array of countries', async () => {
       const countries: IFindCountry[] = [
-        { short_name: shortCountry.US, long_name: 'United States', code: '001' },
-        { short_name: shortCountry.CA, long_name: 'Canada', code: '002' }
+        { id: 'fake-uuid', short_name: shortCountry.US, long_name: 'United States', code: '001' },
+        { id: 'fake-uuid', short_name: shortCountry.CA, long_name: 'Canada', code: '002' }
       ];
       mockCountryRepository.findAll.mockResolvedValue(countries);
 
@@ -45,7 +45,7 @@ describe('FindCountryService', () => {
     });
 
     it('should return a country if it exists', async () => {
-      const country: IFindCountry = { short_name: shortCountry.US, long_name: 'United States', code: '001' };
+      const country: IFindCountry = { id: 'fake-uuid', short_name: shortCountry.US, long_name: 'United States', code: '001' };
       mockCountryRepository.findById.mockResolvedValue(country);
 
       const result = await service.findById('1');
@@ -56,7 +56,7 @@ describe('FindCountryService', () => {
 
   describe('findByCode', () => {
     it('should return a country if it exists', async () => {
-      const country: IFindCountry = { short_name: shortCountry.US, long_name: 'United States', code: '001' };
+      const country: IFindCountry = { id: 'fake-uuid', short_name: shortCountry.US, long_name: 'United States', code: '001' };
       mockCountryRepository.findByCode.mockResolvedValue(country);
 
       const result = await service.findByCode('001');
@@ -67,7 +67,7 @@ describe('FindCountryService', () => {
 
   describe('findByShortName', () => {
     it('should return a country if it exists', async () => {
-      const country: IFindCountry = { short_name: shortCountry.US, long_name: 'United States', code: '001' };
+      const country: IFindCountry = { id: 'fake-uuid', short_name: shortCountry.US, long_name: 'United States', code: '001' };
       mockCountryRepository.findByShortName.mockResolvedValue(country);
 
       const result = await service.findByShortName(shortCountry.US);
@@ -78,7 +78,7 @@ describe('FindCountryService', () => {
 
   describe('findByLongName', () => {
     it('should return a country if it exists', async () => {
-      const country: IFindCountry = { short_name: shortCountry.US, long_name: 'United States', code: '001' };
+      const country: IFindCountry = { id: 'fake-uuid', short_name: shortCountry.US, long_name: 'United States', code: '001' };
       mockCountryRepository.findByLongName.mockResolvedValue(country);
 
       const result = await service.findByLongName('United States');
