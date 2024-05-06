@@ -10,7 +10,6 @@ import logger from '@shared/logger';
 @injectable()
 class CreateLogExceptionService {
 	constructor(
-        // @ts-ignore
 		@inject('LogExceptionRepository')
 		private LogExceptionRepository: ILogExceptionRepository,
 	) {

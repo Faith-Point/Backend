@@ -4,7 +4,7 @@ import { IFindCountry } from '@modules/shared/country/domain/interfaces/IFindCou
 import FindCountryService from '@modules/shared/country/services/FindCountryService';
 import shortCountry from '@shared/util/ShortCountry';
 
-describe('FindCountryService', () => {
+describe('CountryService', () => {
   let service: FindCountryService;
   let mockCountryRepository: jest.Mocked<ICountryRepository>;
 

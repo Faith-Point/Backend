@@ -12,7 +12,7 @@ class CountryController {
 
 		const country = await service.create(request.body);
 
-		const output = await ApiResponse.execute('Country criada com sucesso!.', country);
+		const output = await ApiResponse.execute('Country created successfully', country);
 
 		return response.json(output);
 	}
@@ -40,7 +40,7 @@ class CountryController {
 
 		const country = await service.findAll();
 
-		const output = await ApiResponse.execute('Find All returned', country);
+		const output = await ApiResponse.execute('All countries returned', country);
 
 		return response.json(output);
 	}
@@ -49,7 +49,7 @@ class CountryController {
 
 		const country = await service.findById(request.params.id);
 
-		const output = await ApiResponse.execute('findById returned', country);
+		const output = await ApiResponse.execute('Country by id returned', country);
 
 		return response.json(output);
 	}
@@ -58,7 +58,7 @@ class CountryController {
 
 		const country = await service.findByShortName(request.body);
 
-		const output = await ApiResponse.execute('findByShortName returned', country);
+		const output = await ApiResponse.execute('Country by short name returned', country);
 
 		return response.json(output);
 	}
@@ -67,7 +67,7 @@ class CountryController {
 
 		const country = await service.findByLongName(request.body);
 
-		const output = await ApiResponse.execute('findByLongName returned', country);
+		const output = await ApiResponse.execute('Country by long name returned', country);
 
 		return response.json(output);
 	}
@@ -76,7 +76,7 @@ class CountryController {
 
 		const country = await service.findByCode(request.body);
 
-		const output = await ApiResponse.execute('findByCode returned', country);
+		const output = await ApiResponse.execute('Country by code returned', country);
 
 		return response.json(output);
 	}
