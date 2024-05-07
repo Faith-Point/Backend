@@ -1,0 +1,40 @@
+version: "3.5"
+services:
+  production:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=production
+    container_name: faithpoint-production
+    environment:
+      - POSTGRES_USER=faithpoint
+      - POSTGRES_PASSWORD=faithpoint
+      - POSTGRES_DB=faithpoint_production
+      - POSTGRES_HOST=faithpoint-db
+    ports:
+      - "3002:3000"
+    volumes:
+      - .:/app
+    networks:
+      - faithpoint-network
+    depends_on:
+      - faithpoint-db
+
+  faithpoint-db:
+    image: postgres:13.3-alpine
+    container_name: faithpoint-db
+    environment:
+      - POSTGRES_USER=faithpoint
+      - POSTGRES_PASSWORD=faithpoint
+      - POSTGRES_DB=faithpoint_production
+    volumes:
+      - faithpoint-db-data:/var/lib/postgresql/data
+    networks:
+      - faithpoint-network
+
+volumes:
+  faithpoint-db-data:
+
+networks:
+  faithpoint-network:
