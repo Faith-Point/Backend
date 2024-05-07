@@ -30,7 +30,7 @@ class CityController {
     public async delete(request: Request, response: Response): Promise<Response> {
 		const service = container.resolve(DeleteCityService);
 
-		const city = await service.delete(request.body);
+		const city = await service.delete(request.params.id);
 
 		const output = await ApiResponse.execute('City deleted. ', city);
 

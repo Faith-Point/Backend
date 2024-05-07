@@ -27,7 +27,7 @@ export const CITY = {
 		},
         {
             name: 'state_id',
-            type: 'uuid',
+            type: 'varchar',
             isNullable: false,
         },
 		{
@@ -48,7 +48,17 @@ export const CITY = {
 			default: 'null',
 			isNullable: true,
 		},
-    ]
+    ],
+	foreignKeys: [
+		{
+			name: 'FK_CITY_STATE_ID_STATE_ID',
+			referencedTableName: 'state',
+			referencedColumnNames: ['id'],
+			columnNames: ['state_id'],
+			onDelete: 'CASCADE',
+			onUpdate: 'CASCADE',
+		},
+	],
 };
 
 export const IDX_CITY_ID = {

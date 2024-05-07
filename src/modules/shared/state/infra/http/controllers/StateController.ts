@@ -30,7 +30,7 @@ class StateController {
     public async delete(request: Request, response: Response): Promise<Response> {
 		const service = container.resolve(DeleteStateService);
 
-		const state = await service.delete(request.body);
+		const state = await service.delete(request.params.id);
 
 		const output = await ApiResponse.execute('State deleted. ', state);
 

@@ -33,7 +33,7 @@ export const ADDRESS = {
         },
         {
             name: 'city_id',
-            type: 'uuid',
+            type: 'varchar',
             isNullable: false,
         },
 		{
@@ -54,7 +54,17 @@ export const ADDRESS = {
 			default: 'null',
 			isNullable: true,
 		},
-    ]
+    ],
+    foreignKeys: [
+		{
+			name: 'FK_ADDRESS_CITY_ID_CITY_ID',
+			referencedTableName: 'city',
+			referencedColumnNames: ['id'],
+			columnNames: ['city_id'],
+			onDelete: 'CASCADE',
+			onUpdate: 'CASCADE',
+		},
+	],
 };
 
 export const IDX_ADDRESS_ID = {

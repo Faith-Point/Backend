@@ -57,10 +57,11 @@ To install the backend, follow these steps:
 1. Clone the repository
 2. Navigate to the "backend" directory
 3. Run `npm install`
-4. Run `docker-compose up -d`
-5. Run `npm run db:migrate`
-6. Run `npm run db:seed`
-7. Run `npm run start`
+4. Run `docker-compose -f docker-compose.develop.yml down`
+5. Run `docker-compose -f docker-compose.develop.yml up --build`
+6. Run `npm run db:migrate`
+7. Run `npm run db:seed`
+8. Run `npm run start`
 
 The API should now be running at [http://localhost:8080](http://localhost:8080/).
 

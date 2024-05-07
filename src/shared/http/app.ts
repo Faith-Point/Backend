@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 import 'express-async-errors';
-import '@shared/container';  // Ensure this is uncommented
+import '@shared/container'; 
 import 'es6-shim';
 import '@shared/database';
 

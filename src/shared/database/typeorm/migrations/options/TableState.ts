@@ -27,7 +27,7 @@ export const STATE = {
 		},
         {
             name: 'country_id',
-            type: 'uuid',
+            type: 'varchar',
             isNullable: false,
         },
 		{
@@ -48,7 +48,17 @@ export const STATE = {
 			default: 'null',
 			isNullable: true,
 		},
-    ]
+    ],
+	foreignKeys: [
+		{
+			name: 'FK_STATE_COUNTRY_ID_COUNTRY_ID',
+			referencedTableName: 'country',
+			referencedColumnNames: ['id'],
+			columnNames: ['country_id'],
+			onDelete: 'CASCADE',
+			onUpdate: 'CASCADE',
+		},
+	],
 };
 
 export const IDX_STATE_ID = {

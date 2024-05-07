@@ -69,7 +69,7 @@ class StateRepository implements IStateRepository {
   ): Promise<IFindState | undefined> {
     const state = this.ormRepository.findOne({
       where: {
-        short_Name: shortname,
+        short_name: shortname,
       },
     });
 

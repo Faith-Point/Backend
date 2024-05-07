@@ -17,8 +17,11 @@ class AddressRepository implements IAddressRepository {
 
   public async create(parameters: ICreateAddress): Promise<IFindAddress> {
     try {
+      console.log('Entrou aqui 11')
       const address = this.ormRepository.create(parameters);
+      console.log('Entrou aqui 22')
       await this.ormRepository.save(address);
+      console.log('Entrou aqui 33')
       return this.mapToIFindAddress(address);
     } catch (error) {
       console.error("Error creating address: ", error);

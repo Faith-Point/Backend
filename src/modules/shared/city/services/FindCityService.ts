@@ -2,6 +2,8 @@
 import { inject, injectable } from 'tsyringe';
 import ICityRepository from '@modules/shared/city/domain/repositories/ICityRepository';
 import IFindCity from '@modules/shared/city/domain/interfaces/IFindCity';
+import IStateRepository from '@modules/shared/state/domain/repositories/IStateRepository';
+import { IState } from '@modules/shared/state/domain/interfaces/IState';
 
 @injectable()
 class FindCityService {
@@ -9,45 +11,54 @@ class FindCityService {
     constructor(
         @inject('CityRepository')
         private cityRepository: ICityRepository,
+
+        @inject('StateRepository')
+        private stateRepository: IStateRepository,
     ) {}
 
-    public async findAll(): Promise<IFindCity[] | undefined> {
-        return this.cityRepository.findAll();
+    private async appendStateDetails(city: IFindCity): Promise<IFindCity> {
+        if (city.state && city.state.id) {
+            const state = await this.stateRepository.findById(city.state.id) as IState; 
+            return { ...city, state };
+        }
+        return city;
+    }
+
+    public async findAll(): Promise<IFindCity[]> {
+        const cities = await this.cityRepository.findAll();
+        return Promise.all(cities.map(city => this.appendStateDetails(city)));
     }
 
     public async findById(id: string): Promise<IFindCity | undefined> {
-        if(!id) {
-            throw new Error('An ID must be provided to find a city.');
-        }
-        return this.cityRepository.findById(id);
+        const city = await this.cityRepository.findById(id);
+        return city ? this.appendStateDetails(city) : undefined;
     }
 
-    public async findByState(code: string): Promise<IFindCity[] | undefined> {
-        if(!code) {
-            throw new Error('A code must be provided to find a city.');
+    public async findByState(stateId: string): Promise<IFindCity[]> {
+        const cities = await this.cityRepository.findByState(stateId);
+        if (!cities) {
+            return [];
         }
-        return this.cityRepository.findByState(code);
+        return Promise.all(cities.map(city => this.appendStateDetails(city)));
+        
     }
 
-    public async findByCode(code: string): Promise<IFindCity[] | undefined> {
-        if(!code) {
-            throw new Error('A code must be provided to find a city.');
+    public async findByCode(code: string): Promise<IFindCity[]> {
+        const cities = await this.cityRepository.findByCode(code);
+        if (!cities) {
+            return [];
         }
-        return this.cityRepository.findByCode(code);
+        return Promise.all(cities.map(city => this.appendStateDetails(city)));
     }
 
     public async findByShortName(shortName: string): Promise<IFindCity | undefined> {
-        if(!shortName) {
-            throw new Error('A short name must be provided to find a city.');
-        }
-        return this.cityRepository.findByShortName(shortName);
+        const city = await this.cityRepository.findByShortName(shortName);
+        return city ? this.appendStateDetails(city) : undefined;
     }
 
     public async findByLongName(longName: string): Promise<IFindCity | undefined> {
-        if(!longName) {
-            throw new Error('A long name must be provided to find a city.');
-        }
-        return this.cityRepository.findByLongName(longName);
+        const city = await this.cityRepository.findByLongName(longName);
+        return city ? this.appendStateDetails(city) : undefined;
     }
 }
 

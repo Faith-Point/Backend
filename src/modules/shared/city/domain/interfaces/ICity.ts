@@ -6,7 +6,7 @@ export interface ICity {
 	long_name?: string;
 	code?: string;
 	state: IState;
-	created_at: Date;
+	created_at?: Date;
 	updated_at?: Date;
 	deleted_at?: Date;
 }

@@ -4,12 +4,18 @@ import { AppError } from '@shared/exceptions/AppError';
 import ICityRepository from '@modules/shared/city/domain/repositories/ICityRepository';
 import ICreateCity from '@modules/shared/city/domain/interfaces/ICreateCity';
 import IFindCity from '@modules/shared/city/domain/interfaces/IFindCity';
+import IFindState from '@modules/shared/state/domain/interfaces/IFindState';
+import IStateRepository from '@modules/shared/state/domain/repositories/IStateRepository';
+import { IState } from '@modules/shared/state/domain/interfaces/IState';
 
 @injectable()
 class CreateCityService {
     constructor(
         @inject('CityRepository')
         private cityRepository: ICityRepository,
+
+        @inject('StateRepository')
+        private stateRepository: IStateRepository,
     ){}
 
     public async create(parameters: ICreateCity): Promise<IFindCity> {
@@ -18,39 +24,25 @@ class CreateCityService {
         }
 
         const dateTimeNow = new Date();
-        const codeExists = await this.cityRepository.findByCode(parameters.code);
-        if(codeExists) {
-            throw new AppError('Code already exists');
+        
+        let stateDetails: IFindState | undefined = undefined;
+        if(parameters.state) {
+            stateDetails = await this.stateRepository.findById(parameters.state.id);
+            if(!stateDetails) {
+                throw new AppError('Country does not exist');
+            }
         }
 
-        const shortNameExists = await this.cityRepository.findByShortName(parameters.short_name);
-        if(shortNameExists) {
-            throw new AppError('Short name already exists');
-        }
-
-        const newId = uuidv4();
-        await this.cityRepository.create({
-            id: newId,
+        const newCity = await this.cityRepository.create({
+            id: uuidv4(),
             short_name: parameters.short_name,
             long_name: parameters.long_name,
             code: parameters.code,
-            state: parameters.state,
+            state: stateDetails as IState,
             created_at: dateTimeNow,
-            updated_at: dateTimeNow,
         });
 
-        const freshCity = await this.cityRepository.findById(newId);
-        if(!freshCity) {
-            throw new AppError('Failed to retrieve the newly created city.');
-        }
-
-        return {
-            id: freshCity.id,
-            short_name: freshCity.short_name,
-            long_name: freshCity.long_name,
-            code: freshCity.code,
-            state: freshCity.state,
-        };
+        return newCity;
     }
 }
 

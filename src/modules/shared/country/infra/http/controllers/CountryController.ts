@@ -29,7 +29,7 @@ class CountryController {
     public async delete(request: Request, response: Response): Promise<Response> {
 		const service = container.resolve(DeleteCountryService);
 
-		const country = await service.delete(request.body);
+		const country = await service.delete(request.params.id);
 
 		const output = await ApiResponse.execute('Country Deleted. ', country);
 

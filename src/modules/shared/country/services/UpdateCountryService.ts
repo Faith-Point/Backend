@@ -25,7 +25,8 @@ class UpdateCountryService {
     }
 
     try {
-      countryData.updated_at = new Date();
+      const dateTimeNow = new Date();
+      countryData.updated_at = dateTimeNow;
       const updateResult = await this.countryRepository.update(id, countryData);
       return updateResult;
     } catch (error) {

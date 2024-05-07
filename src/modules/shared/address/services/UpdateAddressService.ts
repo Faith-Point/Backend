@@ -25,7 +25,8 @@ class UpdateCountryService {
     }
 
     try {
-      paramters.updated_at = new Date();
+      const dateTimeNow = new Date();
+      paramters.updated_at = dateTimeNow;
       const updateResult = await this.addressRepository.update(id, paramters);
       return updateResult;
     } catch(error) {

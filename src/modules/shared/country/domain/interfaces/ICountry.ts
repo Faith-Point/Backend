@@ -5,7 +5,7 @@ export interface ICountry {
 	short_name?: shortCountry;
 	long_name?: string;
 	code?: string;
-	created_at: Date;
+	created_at?: Date;
 	updated_at?: Date;
 	deleted_at?: Date;
 }
