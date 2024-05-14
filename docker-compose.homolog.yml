@@ -30,6 +30,7 @@ services:
       - POSTGRES_DB=faithpoint_homolog
     volumes:
       - faithpoint-db-data:/var/lib/postgresql/data
+      - ./src/config/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh      
     networks:
       - faithpoint-network
 
