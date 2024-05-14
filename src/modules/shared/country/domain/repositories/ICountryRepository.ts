@@ -10,9 +10,9 @@ interface ICountryRepository {
     delete(id: string): Promise<void>;
     findAll(): Promise<IFindCountry[]>;
     findById(id: string): Promise<IFindCountry | undefined>;
-    findByCode(code: string): Promise<IFindCountry | undefined>;
-    findByShortName(shortName: shortCountry): Promise<IFindCountry | undefined>;
-    findByLongName(longName: string): Promise<IFindCountry | undefined>;
+    findCode(code: string): Promise<IFindCountry | undefined>;
+    findShortName(shortName: shortCountry): Promise<IFindCountry | undefined>;
+    findLongName(longName: string): Promise<IFindCountry | undefined>;
   }
   
   export default ICountryRepository;

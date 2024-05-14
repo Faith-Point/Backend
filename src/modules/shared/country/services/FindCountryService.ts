@@ -25,21 +25,21 @@ class FindCountryService {
     if (!code) {
       throw new Error('A code must be provided to find a country.');
     }
-    return this.countryRepository.findByCode(code);
+    return this.countryRepository.findCode(code);
   }
 
   public async findByShortName(shortName: shortCountry): Promise<IFindCountry | undefined> {
     if (!shortName) {
       throw new Error('A short name must be provided to find a country.');
     }
-    return this.countryRepository.findByShortName(shortName);
+    return this.countryRepository.findShortName(shortName);
   }
 
   public async findByLongName(longName: string): Promise<IFindCountry | undefined> {
     if (!longName) {
       throw new Error('A long name must be provided to find a country.');
     }
-    return this.countryRepository.findByLongName(longName);
+    return this.countryRepository.findLongName(longName);
   }
 }
 

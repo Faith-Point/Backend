@@ -1,6 +1,6 @@
 import ICountryRepository from '@modules/shared/country/domain/repositories/ICountryRepository';
 import shortCountry from '@shared/util/ShortCountry';
-import { getRepository, Repository } from 'typeorm';
+import { Repository, getRepository } from 'typeorm';
 import Country from '@modules/shared/country/infra/typeorm/entities/Country';
 import ICreateCountry from '@modules/shared/country/domain/interfaces/ICreateCountry';
 import IUpdateCountry from '@modules/shared/country/domain/interfaces/IUpdateCountry';
@@ -38,22 +38,30 @@ class CountryRepository implements ICountryRepository {
   }
 
   public async findById(id: string): Promise<IFindCountry | undefined> {
-    const country = await this.ormRepository.findOne(id);
+    const country = await this.ormRepository.findOne({
+      where: { id }
+    });
     return country ? this.mapToIFindCountry(country) : undefined;
   }
 
-  public async findByCode(code: string): Promise<IFindCountry | undefined> {
-    const country = await this.ormRepository.findOne({ code });
+  public async findCode(code: string): Promise<IFindCountry | undefined> {
+    const country = await this.ormRepository.findOne({
+      where: { code }
+    });
     return country ? this.mapToIFindCountry(country) : undefined;
   }
 
-  public async findByShortName(shortName: shortCountry): Promise<IFindCountry | undefined> {
-    const country = await this.ormRepository.findOne({ short_name: shortName });
+  public async findShortName(shortName: shortCountry): Promise<IFindCountry | undefined> {
+    const country = await this.ormRepository.findOne({
+      where: { short_name: shortName }
+    });
     return country ? this.mapToIFindCountry(country) : undefined;
   }
   
-  public async findByLongName(longName: string): Promise<IFindCountry | undefined> {
-    const country = await this.ormRepository.findOne({ long_name: longName });
+  public async findLongName(longName: string): Promise<IFindCountry | undefined> {
+    const country = await this.ormRepository.findOne({
+      where: { long_name: longName }
+    });
     return country ? this.mapToIFindCountry(country) : undefined;
   }
 
