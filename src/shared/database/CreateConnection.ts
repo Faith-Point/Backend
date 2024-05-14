@@ -1,53 +1,67 @@
-/* eslint-disable no-new */
-
-import { Connection, createConnection, getConnectionOptions } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import database from '@config/database';
-
-import IConnectionParameters from './interfaces/ICreateConnection';
+import ICreateConnection from './interfaces/ICreateConnection';
 
 class CreateConnection {
-	static async execute(connectionName = 'default'): Promise<Connection> {
-		const defaultOptions = await getConnectionOptions();
+  static async execute(connectionName = 'default'): Promise<DataSource> {
+    const defaultOptions: DataSourceOptions = {
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT || '5432', 10) || 5432,
+      username: process.env.DB_USERNAME || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres',
+      database: process.env.DB_NAME || 'faith-point',
+      entities: [
+        './src/modules/**/infra/typeorm/entities/*.ts',
+        './src/modules/shared/**/infra/typeorm/entities/*.ts'
+      ],
+      migrations: [
+        './src/shared/database/typeorm/migrations/*.ts'
+      ],
+      synchronize: false,
+      logging: true,
+    };
 
-		if (connectionName === 'default') {
-			return createConnection(defaultOptions);
-		}
+    if (connectionName === 'default') {
+      const dataSource = new DataSource(defaultOptions);
+      await dataSource.initialize();
+      return dataSource;
+    }
 
-		// @ts-ignore
-		const options = this.getConnectionParameters(connectionName).shift();
+    const options = this.getConnectionParameters(connectionName);
 
-		return createConnection(
-			Object.assign(defaultOptions, {
-				type: options.type,
-				drive: options.drive,
-				host: options.host,
-				port: options.port,
-				database: options.database,
-				password: options.password,
-				username: options.username,
-				schema: options.schema,
-			}),
-		);
-	}
+    const dataSourceOptions: DataSourceOptions = {
+      ...defaultOptions,
+      type: options.type as 'postgres',
+      host: options.host,
+      port: parseInt(options.port.toString(), 10),
+      database: options.database,
+      password: options.password,
+      username: options.username,
+      schema: options.schema,
+    };
 
-	static getConnectionParameters(connectionName: string): IConnectionParameters {
-		// @ts-ignore
-		return database.connections.filter(elemento => {
-			if (elemento.name === connectionName) {
-				const parametres = {
-					type: elemento.type,
-					host: elemento.host,
-					port: elemento.port,
-					database: elemento.database,
-					password: elemento.password,
-					username: elemento.username,
-					schema: elemento.schema,
-				};
+    const dataSource = new DataSource(dataSourceOptions);
+    await dataSource.initialize();
+    return dataSource;
+  }
 
-				return parametres;
-			}
-		});
-	}
+  static getConnectionParameters(connectionName: string): ICreateConnection {
+    const connection = database.connections.find(element => element.name === connectionName);
+    if (!connection) {
+      throw new Error(`Connection with name ${connectionName} not found`);
+    }
+    return {
+      type: connection.type || 'postgres',
+      host: connection.host || 'faith-point',
+      port: connection.port || 5432,
+      database: connection.database || 'default',
+      password: connection.password || '',
+      username: connection.username || '',
+      schema: connection.schema || 'public',
+      name: connection.name || 'default',
+    };
+  }
 }
 
 export default CreateConnection;

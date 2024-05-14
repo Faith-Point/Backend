@@ -1,4 +1,10 @@
 import 'dotenv/config';
-import { createConnection } from 'typeorm';
-//docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
-createConnection();
+import { AppDataSource } from '@config/data-source';
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log('Data Source has been initialized!');
+  })
+  .catch((err) => {
+    console.error('Error during Data Source initialization:', err);
+  });
