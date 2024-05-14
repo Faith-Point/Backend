@@ -29,9 +29,9 @@ describe('StateService', () => {
       update: jest.fn(),
       findAll: jest.fn(),
       findById: jest.fn(),
-      findByCode: jest.fn(),
-      findByShortName: jest.fn(),
-      findByLongName: jest.fn(),
+      findCode: jest.fn(),
+      findShortName: jest.fn(),
+      findLongName: jest.fn(),
     };
     service = new FindStateService(mockStateRepository, mockCountryRepository);
   });
@@ -90,7 +90,6 @@ describe('StateService', () => {
       expect(mockStateRepository.findById).toHaveBeenCalledWith('1');
     });
   });
-
 
   describe('findByShortName', () => {
     it('should return a state if it exists', async () => {

@@ -29,7 +29,7 @@ class Address implements IAddress {
 	@Column()
 	neighborhood: string;
 	
-	@ManyToOne(() => City)
+	@ManyToOne(() => City, city => city.id, { eager: true })
 	@JoinColumn({ name: 'city_id' })
 	city: ICity;
     

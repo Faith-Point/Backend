@@ -27,7 +27,7 @@ class City implements ICity {
 	@Column()
 	code: string;
 	
-	@ManyToOne(() => State)
+	@ManyToOne(() => State, state => state.id, { eager: true })
 	@JoinColumn({ name: 'state_id' })
 	state: IState;
     

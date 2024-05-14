@@ -10,7 +10,7 @@ import IFindState from '@modules/shared/state/domain/interfaces/IFindState';
 class StateRepository implements IStateRepository {
   private ormRepository: Repository<State>;
   private ormRepositoryCountry: Repository<Country>;
-
+  
   constructor() {
     this.ormRepository = getRepository(State);
     this.ormRepositoryCountry = getRepository(Country);
@@ -27,6 +27,7 @@ class StateRepository implements IStateRepository {
       throw error;
     }
   }
+
   public async update(id: string, state: IUpdateState): Promise<boolean> {
     await this.ormRepository.update(id, state);
     return true;
@@ -37,62 +38,68 @@ class StateRepository implements IStateRepository {
   }
 
   public async findAll(): Promise<IFindState[]> {
-    const state = this.ormRepository.find();
-    return state;
+    const states = await this.ormRepository.find({
+      relations: ['country'],
+    });
+    return states.map(state => this.mapToIFindState(state));
   }
 
   public async findById(id: string): Promise<IFindState | undefined> {
-    const state = this.ormRepository.findOne(id);
-    return state;
+    const state = await this.ormRepository.findOne({
+      where: {
+        id: id
+      },
+      relations: ['country'],
+    });
+    return state ? this.mapToIFindState(state) : undefined;
   }
 
   public async findByCountry(code: string): Promise<IFindState[] | undefined> {
-
     const findCountry = await this.ormRepositoryCountry.findOne({
       where: {
         id: code
       }
     });
-    const state = this.ormRepository.find(
-      {
-        where: {
-          country: findCountry
-        }
-      }
-    );
-
-    return state;
+    if (!findCountry) {
+      return undefined;
+    }
+    const states = await this.ormRepository.find({
+      where: {
+        country: findCountry
+      },
+      relations: ['country'],
+    });
+    return states.map(state => this.mapToIFindState(state));
   }
 
-  public async findByShortName(
-    shortname: shortState
-  ): Promise<IFindState | undefined> {
-    const state = this.ormRepository.findOne({
+  public async findByShortName(shortname: shortState): Promise<IFindState | undefined> {
+    const state = await this.ormRepository.findOne({
       where: {
         short_name: shortname,
       },
+      relations: ['country'],
     });
-
-    return state;
+    return state ? this.mapToIFindState(state) : undefined;
   }
-  public async findByLongName(longName: string): Promise<IFindState | undefined> {
-    const state = this.ormRepository.findOne({
-      where: {
-        long_Name: longName,
-      },
-    });
 
-    return state;
+  public async findByLongName(longName: string): Promise<IFindState | undefined> {
+    const state = await this.ormRepository.findOne({
+      where: {
+        long_name: longName,
+      },
+      relations: ['country'],
+    });
+    return state ? this.mapToIFindState(state) : undefined;
   }
 
   public async findByCode(code: string): Promise<IFindState[] | undefined> {
-    const state = this.ormRepository.find({
+    const states = await this.ormRepository.find({
       where: {
         code: code,
       },
+      relations: ['country'],
     });
-
-    return state;
+    return states.map(state => this.mapToIFindState(state));
   }
 
   private mapToIFindState(state: State): IFindState {

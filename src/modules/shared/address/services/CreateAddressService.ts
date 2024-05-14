@@ -13,15 +13,10 @@ class CreateAddressService {
     ){}
 
     public async create(parameters: ICreateAddress): Promise<IFindAddress> {
-        console.log('Entrou aqui 1')
         if(!parameters.street || !parameters.number || !parameters.city) {
             throw new AppError('Missing required parameters: street, number or city');
         }
-        console.log('Entrou aqui')
-
         const dateTimeNow = new Date();
-
-        console.log('Entrou aqui 2')
         const newAddress = await this.addressRepository.create({
             id: uuidv4(),
             street: parameters.street,
@@ -31,8 +26,6 @@ class CreateAddressService {
             city: parameters.city,
             created_at: dateTimeNow,
         });
-        console.log('Entrou aqui 3')
-
         return newAddress;
     }
 }

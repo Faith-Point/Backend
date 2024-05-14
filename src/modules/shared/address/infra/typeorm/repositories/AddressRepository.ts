@@ -17,11 +17,8 @@ class AddressRepository implements IAddressRepository {
 
   public async create(parameters: ICreateAddress): Promise<IFindAddress> {
     try {
-      console.log('Entrou aqui 11')
       const address = this.ormRepository.create(parameters);
-      console.log('Entrou aqui 22')
       await this.ormRepository.save(address);
-      console.log('Entrou aqui 33')
       return this.mapToIFindAddress(address);
     } catch (error) {
       console.error("Error creating address: ", error);
@@ -37,32 +34,36 @@ class AddressRepository implements IAddressRepository {
     await this.ormRepository.delete(id);
   }
 
-  public async findAll(): Promise<Address[]> {
-    const address = this.ormRepository.find();
-    return address;
+  public async findAll(): Promise<IFindAddress[]> {
+    const addresses = await this.ormRepository.find({
+      relations: ['city', 'city.state', 'city.state.country']
+    });
+    return addresses.map(address => this.mapToIFindAddress(address));
   }
 
   public async findById(id: string): Promise<IFindAddress | undefined> {
-    const address = this.ormRepository.findOne(id);
-    return address;
-  }
-
-  public async findByCity(code: string): Promise<IFindAddress[] | undefined> {
-    const findCity = await this.ormRepositoryCity.findOne({
-      where: {
-        id: code
-      }
+    const address = await this.ormRepository.findOne({
+      where: { id },
+      relations: ['city', 'city.state', 'city.state.country']
     });
-    const address = this.ormRepository.find(
-      {
-        where: {
-          city: findCity
-        }
-      }
-    );
-
-    return address;
+    return address ? this.mapToIFindAddress(address) : undefined;
   }
+
+  public async findByCity(code: string): Promise<IFindAddress[]> {
+    const findCity = await this.ormRepositoryCity.findOne({
+      where: { code },
+      relations: ['state', 'state.country']
+    });
+    if (!findCity) {
+      return [];
+    }
+    const addresses = await this.ormRepository.find({
+      where: { city: findCity },
+      relations: ['city', 'city.state', 'city.state.country']
+    });
+    return addresses.map(address => this.mapToIFindAddress(address));
+  }
+
   private mapToIFindAddress(address: Address): IFindAddress {
     return {
       id: address.id,
