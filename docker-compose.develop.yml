@@ -40,7 +40,7 @@ services:
       - "5432:5432"
     networks:
       - faithpoint-network
-    restart: always  
+    restart: on-failure  
 
 networks:
   faithpoint-network:

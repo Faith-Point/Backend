@@ -18,12 +18,12 @@ class CreateCountryService {
     }
 
     const dateTimeNow = new Date();
-    const codeExists = await this.countryRepository.findByCode(parameters.code);
+    const codeExists = await this.countryRepository.findCode(parameters.code);
     if (codeExists) {
       throw new AppError('Code already exists');
     }
 
-    const shortNameExists = await this.countryRepository.findByShortName(parameters.short_name);
+    const shortNameExists = await this.countryRepository.findShortName(parameters.short_name);
     if (shortNameExists) {
       throw new AppError('Short name already exists');
     }
