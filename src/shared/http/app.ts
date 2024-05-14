@@ -18,12 +18,14 @@ import ErrorResponse from '@shared/http/response/ErrorResponse';
 import http from '@config/http';
 import CelebrateError from '@shared/exceptions/CelebrateError';
 import Dictionary from '@shared/exceptions/dictionary/request';
+import setupSwagger from '@config/swagger'; 
 
 const app = express();
 
 app.use(express.json());
 app.use(setupRoutes);
 
+setupSwagger(app);
 CreateConnection.execute();
 
 app.use(async (error: Handler, request: express.Request, response: express.Response) => {
