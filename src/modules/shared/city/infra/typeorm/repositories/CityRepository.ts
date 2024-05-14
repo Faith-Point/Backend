@@ -34,62 +34,56 @@ class CityRepository implements ICityRepository {
     await this.ormRepository.delete(id);
   }
 
-  public async findAll(): Promise<City[]> {
-    const city = this.ormRepository.find();
-    return city;
+  public async findAll(): Promise<IFindCity[]> {
+    const cities = await this.ormRepository.find({ relations: ['state', 'state.country'] });
+    return cities.map(city => this.mapToIFindCity(city));
   }
 
   public async findById(id: string): Promise<IFindCity | undefined> {
-    const city = this.ormRepository.findOne(id);
-    return city;
+    const city = await this.ormRepository.findOne({
+      where: { id },
+      relations: ['state', 'state.country'],
+    });
+    return city ? this.mapToIFindCity(city) : undefined;
   }
 
   public async findByState(code: string): Promise<IFindCity[] | undefined> {
     const findState = await this.ormRepositoryState.findOne({
-      where: {
-        id: code
-      }
+      where: { code },
+      relations: ['country'],
     });
-    const city = this.ormRepository.find(
-      {
-        where: {
-          country: findState
-        }
-      }
-    );
-
-    return city;
+    if (!findState) {
+      return undefined;
+    }
+    const cities = await this.ormRepository.find({
+      where: { state: findState },
+      relations: ['state', 'state.country'],
+    });
+    return cities.map(city => this.mapToIFindCity(city));
   }
 
-  public async findByShortName(
-    shortname: string
-  ): Promise<IFindCity | undefined> {
-    const city = this.ormRepository.findOne({
-      where: {
-        short_name: shortname,
-      },
+  public async findByShortName(shortName: string): Promise<IFindCity | undefined> {
+    const city = await this.ormRepository.findOne({
+      where: { short_name: shortName },
+      relations: ['state', 'state.country'],
     });
-
-    return city;
+    return city ? this.mapToIFindCity(city) : undefined;
   }
+
   public async findByLongName(longName: string): Promise<IFindCity | undefined> {
-    const city = this.ormRepository.findOne({
-      where: {
-        long_name: longName,
-      },
+    const city = await this.ormRepository.findOne({
+      where: { long_name: longName },
+      relations: ['state', 'state.country'],
     });
-
-    return city;
+    return city ? this.mapToIFindCity(city) : undefined;
   }
 
   public async findByCode(code: string): Promise<IFindCity[] | undefined> {
-    const city = this.ormRepository.find({
-      where: {
-        code: code,
-      },
+    const cities = await this.ormRepository.find({
+      where: { code },
+      relations: ['state', 'state.country'],
     });
-
-    return city;
+    return cities.map(city => this.mapToIFindCity(city));
   }
 
   private mapToIFindCity(city: City): IFindCity {

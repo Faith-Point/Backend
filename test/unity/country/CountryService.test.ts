@@ -15,9 +15,9 @@ describe('CountryService', () => {
       update: jest.fn(),
       findAll: jest.fn(),
       findById: jest.fn(),
-      findByCode: jest.fn(),
-      findByShortName: jest.fn(),
-      findByLongName: jest.fn(),
+      findCode: jest.fn(),
+      findShortName: jest.fn(),
+      findLongName: jest.fn(),
     };
     service = new FindCountryService(mockCountryRepository);
   });
@@ -25,8 +25,8 @@ describe('CountryService', () => {
   describe('findAll', () => {
     it('should return an array of countries', async () => {
       const countries: IFindCountry[] = [
-        { id: 'fake-uuid', short_name: shortCountry.US, long_name: 'United States', code: '001' },
-        { id: 'fake-uuid', short_name: shortCountry.CA, long_name: 'Canada', code: '002' }
+        { id: 'fake-uuid1', short_name: shortCountry.US, long_name: 'United States', code: '001' },
+        { id: 'fake-uuid2', short_name: shortCountry.CA, long_name: 'Canada', code: '002' }
       ];
       mockCountryRepository.findAll.mockResolvedValue(countries);
 
@@ -57,33 +57,33 @@ describe('CountryService', () => {
   describe('findByCode', () => {
     it('should return a country if it exists', async () => {
       const country: IFindCountry = { id: 'fake-uuid', short_name: shortCountry.US, long_name: 'United States', code: '001' };
-      mockCountryRepository.findByCode.mockResolvedValue(country);
+      mockCountryRepository.findCode.mockResolvedValue(country);
 
       const result = await service.findByCode('001');
       expect(result).toEqual(country);
-      expect(mockCountryRepository.findByCode).toHaveBeenCalledWith('001');
+      expect(mockCountryRepository.findCode).toHaveBeenCalledWith('001');
     });
   });
 
   describe('findByShortName', () => {
     it('should return a country if it exists', async () => {
       const country: IFindCountry = { id: 'fake-uuid', short_name: shortCountry.US, long_name: 'United States', code: '001' };
-      mockCountryRepository.findByShortName.mockResolvedValue(country);
+      mockCountryRepository.findShortName.mockResolvedValue(country);
 
       const result = await service.findByShortName(shortCountry.US);
       expect(result).toEqual(country);
-      expect(mockCountryRepository.findByShortName).toHaveBeenCalledWith(shortCountry.US);
+      expect(mockCountryRepository.findShortName).toHaveBeenCalledWith(shortCountry.US);
     });
   });
 
   describe('findByLongName', () => {
     it('should return a country if it exists', async () => {
       const country: IFindCountry = { id: 'fake-uuid', short_name: shortCountry.US, long_name: 'United States', code: '001' };
-      mockCountryRepository.findByLongName.mockResolvedValue(country);
+      mockCountryRepository.findLongName.mockResolvedValue(country);
 
       const result = await service.findByLongName('United States');
       expect(result).toEqual(country);
-      expect(mockCountryRepository.findByLongName).toHaveBeenCalledWith('United States');
+      expect(mockCountryRepository.findLongName).toHaveBeenCalledWith('United States');
     });
   });
 });

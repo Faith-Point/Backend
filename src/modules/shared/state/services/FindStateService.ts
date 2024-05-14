@@ -46,7 +46,8 @@ class FindStateService {
         if (!states) {
             return []; 
         }
-        return Promise.all(states.map(state => this.appendCountryDetails(state)));
+        const statesWithCountries = await Promise.all(states.map(state => this.appendCountryDetails(state)));
+        return statesWithCountries;
     }
 
     public async findByCode(code: string): Promise<IFindState[]> {
@@ -54,7 +55,8 @@ class FindStateService {
         if (!states) {
             return []; 
         }
-        return Promise.all(states.map(state => this.appendCountryDetails(state)));
+        const statesWithCountries = await Promise.all(states.map(state => this.appendCountryDetails(state)));
+        return statesWithCountries;
     }
 
     public async findByShortName(shortName: shortState): Promise<IFindState | undefined> {
