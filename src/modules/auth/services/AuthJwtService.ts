@@ -1,10 +1,12 @@
 import { sign } from 'jsonwebtoken';
 import auth from '@config/auth';
 import { IUser } from '@modules/user/domain/interfaces/IUser';
-import IFindUserResponseLogin from '@modules/auth/domain/interfaces/IFindUserResponseLogin';
+import IResponseLogin from '@shared/http/auth/response/IResponseLogin';
+import logger from '@shared/logger';
 
 class AuthJwtService {
-  public async sign(user: IUser): Promise<IFindUserResponseLogin> {
+  public async sign(user: IUser): Promise<IResponseLogin> {
+    logger.info('AuthJwtService.sign recieving:', user);
     const payload = {
       id: user.id,
     };
@@ -13,6 +15,7 @@ class AuthJwtService {
       expiresIn: auth.jwt.expiresIn,
     });
 
+    logger.info('AuthJwtService.sign accessToken:', accessToken);
     return {
       user,
       token: accessToken,

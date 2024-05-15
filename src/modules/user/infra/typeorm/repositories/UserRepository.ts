@@ -1,5 +1,6 @@
 import { injectable } from 'tsyringe';
 import IUserRepository from '@modules/user/domain/repositories/IUserRepository';
+import Address from '@modules/shared/address/infra/typeorm/entities/Address';
 import { Repository } from 'typeorm';
 import User from '@modules/user/infra/typeorm/entities/User';
 import ICreateUser from '@modules/user/domain/interfaces/ICreateUser';
@@ -13,18 +14,37 @@ import { IUser } from '@modules/user/domain/interfaces/IUser';
 class UserRepository implements IUserRepository {
   private ormRepository: Repository<User>;
   private ormRepositoryRole: Repository<Role>;
+  private ormRepositoryAddress: Repository<Address>;
 
   constructor() {
     this.ormRepository = AppDataSource.getRepository(User);
     this.ormRepositoryRole = AppDataSource.getRepository(Role);
+    this.ormRepositoryAddress = AppDataSource.getRepository(Address);
   }
 
   public async create(data: ICreateUser): Promise<User> {
-    const user = this.ormRepository.create(data);
+    try {
+      const user = this.ormRepository.create(data);
 
-    await this.ormRepository.save(user);
+      if (data.role && data.role.id) {
+        const role = await this.ormRepositoryRole.findOneBy({ id: data.role.id });
+        if (role) {
+          user.role = role;
+        }
+      }
 
-    return user;
+      if (data.address && data.address.id) {
+        const address = await this.ormRepositoryAddress.findOneBy({ id: data.address.id });
+        if (address) {
+          user.address = address;
+        }
+      }
+
+      return await this.ormRepository.save(user);
+    } catch (error) {
+      console.error('Error creating user: ', error);
+      throw error;
+    }
   }
 
   public async update(id: string, user: IUpdateUser): Promise<boolean> {

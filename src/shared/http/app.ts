@@ -42,7 +42,7 @@ initializeDataSource().then(() => {
 
       ShowPrettyError.execute(error);
 
-      handler.statusCode = handler.statusCode ?? http.INTERNAL_SERVER_ERROR;
+      handler.statusCode = typeof handler.statusCode === 'undefined' ? http.INTERNAL_SERVER_ERROR : handler.statusCode;
 
       const createLogExceptionService = container.resolve(CreateLogExceptionService);
       createLogExceptionService.execute(handler, request);

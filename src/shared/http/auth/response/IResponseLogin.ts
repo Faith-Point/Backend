@@ -1,8 +1,8 @@
 import { IUser } from '@modules/user/domain/interfaces/IUser';
 
-interface IFindUserResponseLogin {
+interface IResponseLogin {
   user: IUser;
   token: string;
 }
 
-export default IFindUserResponseLogin;
+export default IResponseLogin;
