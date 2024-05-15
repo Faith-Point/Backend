@@ -1,18 +1,22 @@
+import { injectable } from 'tsyringe';
 import IUserRepository from '@modules/user/domain/repositories/IUserRepository';
-import { getRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import User from '@modules/user/infra/typeorm/entities/User';
 import ICreateUser from '@modules/user/domain/interfaces/ICreateUser';
 import IUpdateUser from '@modules/user/domain/interfaces/IUpdateUser';
 import IFindUser from '@modules/user/domain/interfaces/IFindUser';
 import Role from '@modules/role/infra/typeorm/entities/Role';
+import AppDataSource from '@config/data-source';
+import { IUser } from '@modules/user/domain/interfaces/IUser';
 
+@injectable()
 class UserRepository implements IUserRepository {
   private ormRepository: Repository<User>;
   private ormRepositoryRole: Repository<Role>;
 
   constructor() {
-    this.ormRepository = getRepository(User);
-    this.ormRepositoryRole = getRepository(Role);
+    this.ormRepository = AppDataSource.getRepository(User);
+    this.ormRepositoryRole = AppDataSource.getRepository(Role);
   }
 
   public async create(data: ICreateUser): Promise<User> {
@@ -58,7 +62,7 @@ class UserRepository implements IUserRepository {
     return users ? users : undefined;
   }
 
-  public async findByEmail(email: string): Promise<IFindUser | undefined> {
+  public async findByEmail(email: string): Promise<IUser | undefined> {
     const user = await this.ormRepository.findOne({
       where: { email },
       relations: ['role', 'address'],

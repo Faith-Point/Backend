@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import ormConfig from '../../ormconfig.json';
 
-export const AppDataSource = new DataSource({
+const AppDataSource = new DataSource({
   ...ormConfig,
   type: 'postgres',
   host: process.env.DB_HOST || ormConfig.host,
@@ -12,10 +12,14 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME || ormConfig.database,
 });
 
-AppDataSource.initialize()
-  .then(() => {
+export const initializeDataSource = async () => {
+  try {
+    await AppDataSource.initialize();
     console.log('Data Source has been initialized!');
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error('Error during Data Source initialization:', err);
-  });
+    throw err;
+  }
+};
+
+export default AppDataSource;

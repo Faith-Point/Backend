@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import IUserRepository from '@modules/user/domain/repositories/IUserRepository';
 import IFindUser from '@modules/user/domain/interfaces/IFindUser';
+import { IUser } from '@modules/user/domain/interfaces/IUser';
 
 @injectable()
 class FindUserService {
@@ -24,7 +25,7 @@ class FindUserService {
         return users;
     }
 
-    public async findByEmail(email: string): Promise<IFindUser | undefined> {
+    public async findByEmail(email: string): Promise<IUser | undefined> {
         const user = await this.userRepository.findByEmail(email);
         return user;
     }

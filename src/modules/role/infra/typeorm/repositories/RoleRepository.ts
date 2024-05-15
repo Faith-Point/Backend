@@ -1,15 +1,18 @@
 import IRoleRepository from '@modules/role/domain/repositories/IRoleRepository';
-import { Repository, getRepository } from 'typeorm';
 import Role from '@modules/role/infra/typeorm/entities/Role';
 import ICreateRole from '@modules/role/domain/interfaces/ICreateRole';
 import IFindRole from '@modules/role/domain/interfaces/IFindRole';
 import IUpdateRole from '@modules/role/domain/interfaces/IUpdateRole';
+import { injectable } from 'tsyringe';
+import AppDataSource from '@config/data-source';
+import { Repository } from 'typeorm';
 
+@injectable()
 class RoleRepository implements IRoleRepository {
   private ormRepository: Repository<Role>;
 
   constructor() {
-    this.ormRepository = getRepository(Role);
+    this.ormRepository = AppDataSource.getRepository(Role);
   }
 
   public async create(parameters: ICreateRole): Promise<IFindRole> {

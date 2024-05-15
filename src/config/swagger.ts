@@ -1,6 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { Express } from 'express';
+import swaggerComponents from '@config/swaggerComponents';
 
 const options = {
   definition: {
@@ -16,6 +17,7 @@ const options = {
         description: 'Development server',
       },
     ],
+    components: swaggerComponents.components,
   },
   apis: [
     './src/modules/**/infra/http/routes/*.ts',

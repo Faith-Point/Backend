@@ -1,40 +1,21 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import database from '@config/database';
+import AppDataSource from '@config/data-source';
 import ICreateConnection from './interfaces/ICreateConnection';
+import database from '@config/database';
 
 class CreateConnection {
   static async execute(connectionName = 'default'): Promise<DataSource> {
-    const defaultOptions: DataSourceOptions = {
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT || '5432', 10) || 5432,
-      username: process.env.DB_USERNAME || 'postgres',
-      password: process.env.DB_PASSWORD || 'postgres',
-      database: process.env.DB_NAME || 'faith-point',
-      entities: [
-        './src/modules/**/infra/typeorm/entities/*.ts',
-        './src/modules/shared/**/infra/typeorm/entities/*.ts'
-      ],
-      migrations: [
-        './src/shared/database/typeorm/migrations/*.ts'
-      ],
-      synchronize: false,
-      logging: true,
-    };
-
     if (connectionName === 'default') {
-      const dataSource = new DataSource(defaultOptions);
-      await dataSource.initialize();
-      return dataSource;
+      await AppDataSource.initialize();
+      return AppDataSource;
     }
 
     const options = this.getConnectionParameters(connectionName);
 
     const dataSourceOptions: DataSourceOptions = {
-      ...defaultOptions,
+      ...AppDataSource.options,
       type: options.type as 'postgres',
       host: options.host,
-      port: parseInt(options.port.toString(), 10),
       database: options.database,
       password: options.password,
       username: options.username,
@@ -52,14 +33,14 @@ class CreateConnection {
       throw new Error(`Connection with name ${connectionName} not found`);
     }
     return {
+      name: connection.name || 'faith-point',
       type: connection.type || 'postgres',
       host: connection.host || 'faith-point',
       port: connection.port || 5432,
-      database: connection.database || 'default',
-      password: connection.password || '',
-      username: connection.username || '',
+      database: connection.database || 'faith-point',
+      password: connection.password || 'postgres',
+      username: connection.username || 'postgres',
       schema: connection.schema || 'public',
-      name: connection.name || 'default',
     };
   }
 }

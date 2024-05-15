@@ -1,16 +1,19 @@
-import ICountryRepository from '@modules/shared/country/domain/repositories/ICountryRepository';
-import shortCountry from '@shared/util/ShortCountry';
-import { Repository, getRepository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { injectable } from 'tsyringe';
 import Country from '@modules/shared/country/infra/typeorm/entities/Country';
+import ICountryRepository from '@modules/shared/country/domain/repositories/ICountryRepository';
 import ICreateCountry from '@modules/shared/country/domain/interfaces/ICreateCountry';
 import IUpdateCountry from '@modules/shared/country/domain/interfaces/IUpdateCountry';
 import { IFindCountry } from '@modules/shared/country/domain/interfaces/IFindCountry';
+import AppDataSource from '@config/data-source';
+import shortCountry from '@shared/util/ShortCountry';
 
+@injectable()
 class CountryRepository implements ICountryRepository {
   private ormRepository: Repository<Country>;
 
   constructor() {
-    this.ormRepository = getRepository(Country);
+    this.ormRepository = AppDataSource.getRepository(Country);
   }
 
   public async create(parameters: ICreateCountry): Promise<IFindCountry> {
@@ -53,7 +56,9 @@ class CountryRepository implements ICountryRepository {
 
   public async findShortName(shortName: shortCountry): Promise<IFindCountry | undefined> {
     const country = await this.ormRepository.findOne({
-      where: { short_name: shortName }
+      where: {
+        short_name: shortName
+      }
     });
     return country ? this.mapToIFindCountry(country) : undefined;
   }

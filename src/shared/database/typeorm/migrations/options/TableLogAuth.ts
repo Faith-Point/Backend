@@ -1,5 +1,5 @@
-export const AUTH = {
-  name: 'auth',
+export const LOG_AUTH = {
+  name: 'log_auth',
   columns: [
       {
           name: 'id',
@@ -12,18 +12,16 @@ export const AUTH = {
           type: 'varchar',
       },
       {
-          name: 'token',
-          type: 'varchar',
-          precision: 255,
+        name: 'log',
+        type: 'enum',
+        precision: 1,
+        isNullable: false,
+        enum: ['login', 'logout', 'refresh'],
       },
       {
           name: 'created_at',
           type: 'timestamp',
           default: 'now()',
-      },
-      {
-          name: 'expires_at',
-          type: 'timestamp',
       },
   ],
   foreignKeys: [
@@ -38,12 +36,12 @@ export const AUTH = {
   ],
 };
 
-export const IDX_AUTH_ID = {
-  name: 'IDX_AUTH_ID',
-  columnNames: ['id'],
+export const IDX_LOG_AUTH_ID = {
+	name: 'IDX_LOG_AUTH_ID',
+	columnNames: ['id'],
 };
 
-export const IDX_AUTH_USER_ID = {
-  name: 'IDX_AUTH_USER_ID',
-  columnNames: ['user_id'],
+export const IDX_LOG_AUTH_USERS_ID = {
+	name: 'IDX_LOG_AUTH_USERS_ID',
+	columnNames: ['user_id'],
 };

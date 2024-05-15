@@ -3,7 +3,7 @@ import 'dotenv/config';
 const database = {
   connections: [
     {
-      name: 'default',
+      name: process.env.DB_NAME,
       type: process.env.DB_TYPE || 'postgres', 
       host: process.env.DB_HOST, 
       port: parseInt(process.env.DB_PORT || '5432', 10),
