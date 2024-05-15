@@ -1,12 +1,15 @@
-import Redis, { Redis as RedisClient } from 'ioredis';
+import { createClient, RedisClientType } from 'redis';
 import cache from '@config/cache';
 import CacheConfig from '@shared/cache/CacheConfig';
 
 class CacheRedis {
-  private client: RedisClient;
+  private client: RedisClientType;
 
   constructor() {
-    this.client = new Redis(CacheConfig.config.redis);
+    this.client = createClient({
+      url: CacheConfig.config.redis.url
+    });
+    this.client.connect();
   }
 
   public async save<T>(key: string, value: T, expireat?: number | undefined): Promise<void> {

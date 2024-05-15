@@ -1,12 +1,18 @@
+import { RedisClientOptions } from 'redis';
 import cache from '@config/cache';
-import ICacheConfig from '@shared/cache/interfaces/ICacheConfig';
+
+interface ICacheConfig {
+  config: {
+    redis: RedisClientOptions;
+  };
+  driver: string;
+}
 
 const CacheConfig: ICacheConfig = {
   config: {
     redis: {
-      host: cache.redis.host,
-      port: cache.redis.port,
-    },
+      url: `redis://${cache.redis.host}:${cache.redis.port}`
+    }
   },
   driver: cache.redis.driver,
 };
