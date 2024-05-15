@@ -1,18 +1,21 @@
 import ICityRepository from '@modules/shared/city/domain/repositories/ICityRepository';
-import { getRepository, Repository } from 'typeorm';
 import City from '@modules/shared/city/infra/typeorm/entities/City';
 import ICreateCity from '@modules/shared/city/domain/interfaces/ICreateCity';
 import IUpdateCity from '@modules/shared/city/domain/interfaces/IUpdateCity';
 import IFindCity from '@modules/shared/city/domain/interfaces/IFindCity';
 import State from '@modules/shared/state/infra/typeorm/entities/State';
+import { injectable } from 'tsyringe';
+import AppDataSource from '@config/data-source';
+import { Repository } from 'typeorm';
 
+@injectable()
 class CityRepository implements ICityRepository {
   private ormRepository: Repository<City>;
   private ormRepositoryState: Repository<State>;
 
   constructor() {
-    this.ormRepository = getRepository(City);
-    this.ormRepositoryState = getRepository(State);
+    this.ormRepository = AppDataSource.getRepository(City);
+    this.ormRepositoryState = AppDataSource.getRepository(State);
   }
 
   public async create(parameters: ICreateCity): Promise<IFindCity> {

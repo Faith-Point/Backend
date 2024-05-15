@@ -1,8 +1,10 @@
-import { Repository } from 'typeorm';
 import Handler from '@shared/exceptions/Handler';
 import ILogExceptionRepository from '@modules/shared/logException/domain/repositories/ILogExceptionRepository';
 import LogException from '@modules/shared/logException/infra/typeorm/entities/LogException';
+import { injectable } from 'tsyringe';
+import { Repository } from 'typeorm';
 
+@injectable()
 class LogExceptionRepository implements ILogExceptionRepository {
   private ormRepository: Repository<LogException>;
 
