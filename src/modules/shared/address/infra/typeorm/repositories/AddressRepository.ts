@@ -1,18 +1,21 @@
 import IAddressRepository from '@modules/shared/address/domain/repositories/IAddressRepository';
-import { getRepository, Repository } from 'typeorm';
 import Address from '@modules/shared/address/infra/typeorm/entities/Address';
 import ICreateAddress from '@modules/shared/address/domain/interfaces/ICreateAddress';
 import IUpdateAddress from '@modules/shared/address/domain/interfaces/IUpdateAddress';
 import IFindAddress from '@modules/shared/address/domain/interfaces/IFindAddress';
 import City from '@modules/shared/city/infra/typeorm/entities/City';
+import { injectable } from 'tsyringe';
+import AppDataSource from '@config/data-source';
+import { Repository } from 'typeorm';
 
+@injectable()
 class AddressRepository implements IAddressRepository {
   private ormRepository: Repository<Address>;
   private ormRepositoryCity: Repository<City>;
 
   constructor() {
-    this.ormRepository = getRepository(Address);
-    this.ormRepositoryCity = getRepository(City);
+    this.ormRepository = AppDataSource.getRepository(Address);
+    this.ormRepositoryCity = AppDataSource.getRepository(City);
   }
 
   public async create(parameters: ICreateAddress): Promise<IFindAddress> {

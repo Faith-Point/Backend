@@ -16,8 +16,10 @@ services:
       - STRIPE_API_KEY=${STRIPE_API_KEY}
       - LOG_LEVEL=${LOG_LEVEL}
       - LOG_PATH=${LOG_PATH}
+      - REDIS_HOST=faith-point-redis
+      - REDIS_PORT=6379
     ports:
-      - "3308:3308" 
+      - "3308:3308"
     volumes:
       - .:/app
       - /app/node_modules
@@ -25,7 +27,8 @@ services:
       - faithpoint-network
     depends_on:
       - faith-point
-    restart: on-failure  
+      - faith-point-redis
+    restart: on-failure
 
   faith-point:
     image: postgres:13.3-alpine
@@ -41,7 +44,16 @@ services:
       - "5432:5432"
     networks:
       - faithpoint-network
-    restart: on-failure  
+    restart: on-failure
+
+  faith-point-redis:
+    image: redis:alpine
+    container_name: faith-point-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - faithpoint-network
+    restart: on-failure
 
 networks:
   faithpoint-network:
