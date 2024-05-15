@@ -3,16 +3,16 @@ import 'dotenv/config';
 const database = {
   connections: [
     {
-      name: 'default',
-      type: process.env.DB_TYPE, 
+      name: process.env.DB_NAME,
+      type: process.env.DB_TYPE || 'postgres', 
       host: process.env.DB_HOST, 
-      database: process.env.DB_NAME,
-      port: process.env.DB_NAME,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      schema: process.env.DB_SCHEMA,
+      port: parseInt(process.env.DB_PORT || '5432', 10),
+      username: process.env.DB_USERNAME || 'postgres',
+      password: process.env.DB_PASSWORD || 'postgres',
+      database: process.env.DB_NAME || 'faith-point',
+      schema: process.env.DB_SCHEMA || 'public',
       synchronize: true,
-      debug: true,
+      logging: true,
     },
   ],
 };

@@ -1,19 +1,22 @@
 import IStateRepository from '@modules/shared/state/domain/repositories/IStateRepository';
 import shortState from '@shared/util/ShortState';
-import { getRepository, Repository } from 'typeorm';
 import State from '@modules/shared/state/infra/typeorm/entities/State';
 import ICreateState from '@modules/shared/state/domain/interfaces/ICreateState';
 import IUpdateState from '@modules/shared/state/domain/interfaces/IUpdateState';
 import Country from '@modules/shared/country/infra/typeorm/entities/Country';
 import IFindState from '@modules/shared/state/domain/interfaces/IFindState';
+import { injectable } from 'tsyringe';
+import AppDataSource from '@config/data-source';
+import { Repository } from 'typeorm';
 
+@injectable()
 class StateRepository implements IStateRepository {
   private ormRepository: Repository<State>;
   private ormRepositoryCountry: Repository<Country>;
   
   constructor() {
-    this.ormRepository = getRepository(State);
-    this.ormRepositoryCountry = getRepository(Country);
+    this.ormRepository = AppDataSource.getRepository(State);
+    this.ormRepositoryCountry = AppDataSource.getRepository(Country);
   }
 
   public async create(parameters: ICreateState): Promise<IFindState> {
