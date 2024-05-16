@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import ormConfig from '../../ormconfig.json';
-import logger from '@shared/logger';
 
 const AppDataSource = new DataSource({
   ...ormConfig,
@@ -16,7 +15,7 @@ const AppDataSource = new DataSource({
 export const initializeDataSource = async () => {
   try {
     await AppDataSource.initialize();
-    logger.info('Data Source has been initialized!');
+    console.log('Data Source has been initialized!');
   } catch (err) {
     console.error('Error during Data Source initialization:', err);
     throw err;

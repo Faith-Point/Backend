@@ -1,15 +1,11 @@
-import { Joi as BaseJoi, Segments } from 'celebrate';
-import { messages } from 'joi-translation-pt-br'
-import JoiDate from '@joi/date';
+import { body } from 'express-validator';
 
-const Joi = BaseJoi.extend(JoiDate);
-const schema = {
-    email: Joi.string().email().required().messages(messages),
-    password: Joi.string().required().messages(messages),
-};
+const loginValidate = [
+  body('email')
+    .isEmail().withMessage('Email inválido')
+    .notEmpty().withMessage('Email é obrigatório'),
+  body('password')
+    .notEmpty().withMessage('Senha é obrigatória')
+];
 
-const rules = {
-	[Segments.BODY]: schema,
-};
-
-export default rules;
+export default loginValidate;

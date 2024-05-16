@@ -14,7 +14,7 @@ class CreateConnection {
 
     const dataSourceOptions: DataSourceOptions = {
       ...AppDataSource.options,
-      type: options.type as 'postgres',
+      type: 'postgres' as any,
       host: options.host,
       database: options.database,
       password: options.password,

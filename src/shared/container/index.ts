@@ -6,3 +6,4 @@ import '@modules/shared/address/infra/container/index';
 import '@modules/role/infra/container/index';
 import '@modules/user/infra/container/index';
 import '@modules/auth/infra/container/index';
+import '@modules/logAuth/infra/container/index';

@@ -1,5 +1,6 @@
+import { v4 as uuidv4 } from 'uuid';
 import { inject, injectable, container } from 'tsyringe';
-import IUsersRepository from '@modules/user/domain/repositories/IUserRepository';
+import IUserRepository from '@modules/user/domain/repositories/IUserRepository';
 import authDictionary from '@shared/exceptions/dictionary/auth';
 import IResponseLogin from '@shared/http/auth/response/IResponseLogin';
 import Handler from '@shared/exceptions/Handler';
@@ -14,14 +15,14 @@ class RefreshTokenService {
 	saveLogAuth: SaveLogAuth;
 
 	constructor(
-		@inject('UsersRepository')
-		private usersRepository: IUsersRepository,
+		@inject('UserRepository')
+		private userRepository: IUserRepository,
 	) {
 		this.saveLogAuth = container.resolve(SaveLogAuth);
 	}
 
 	public async execute(email: string): Promise<IResponseLogin> {
-		const user = await this.usersRepository.findByEmail(email);
+		const user = await this.userRepository.findByEmail(email);
 		if (!user) {
 			throw new Handler(
 				authDictionary.AUTHENTICATED_FAILED_REFRESH_TOKEN.MESSAGE,
@@ -35,7 +36,8 @@ class RefreshTokenService {
 		await UserCache.execute(newAuth.token, user);
 
 		const typeAuth = 'refresh' as unknown as typeAuth;
-		await this.saveLogAuth.execute({ user, typeAuth });
+		const dateTimeNow = new Date();
+		await this.saveLogAuth.execute({ id:uuidv4() , user, typeAuth, created_at: dateTimeNow});
 
 		return newAuth;
 	}

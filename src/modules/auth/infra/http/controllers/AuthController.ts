@@ -6,21 +6,20 @@ import RefreshTokenService from '@modules/auth/services/RefreshTokenService';
 import LogoutService from '@modules/auth/services/LogoutService';
 import { container } from 'tsyringe';
 import FindUserService from '@modules/users/services/FindUserService';
-import logger from '@shared/logger';
 
 class AuthController {
 	public async login(request: Request, response: Response): Promise<Response> {
-		logger.info('AuthController.login', request, response);
-	  const service = container.resolve(AuthLoginService);
-  
-	  const { email, password } = request.body;
-  
-	  const auth = await service.execute({ email, password });
-  
-	  const output = await ApiResponse.execute('Login Realizado com sucesso!', auth);
-  
-	  return response.json(output);
-	}
+		console.log('AuthController.login', request.body);
+		const service = container.resolve(AuthLoginService);
+	  
+		const { email, password } = request.body;
+	  
+		const auth = await service.execute({ email, password });
+	  
+		const output = await ApiResponse.execute('Login Realizado com sucesso!', auth);
+	  
+		return response.json(output);
+	  }
   
 	public async refreshToken(request: Request, response: Response): Promise<Response> {
 	  const service = container.resolve(RefreshTokenService);

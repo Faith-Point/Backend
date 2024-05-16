@@ -7,15 +7,11 @@ import express from 'express';
 import setupRoutes from './routes';
 import { container } from 'tsyringe';
 import { initializeDataSource } from '@config/data-source'; // Importando a função de inicialização do Data Source
-import logger from '@shared/logger';
-import { isCelebrateError } from 'celebrate';
 import Handler from '@shared/exceptions/Handler';
 import ShowPrettyError from '@shared/exceptions/ShowPrettyError';
 import CreateLogExceptionService from '@modules/shared/logException/services/CreateLogExceptionService';
 import ErrorResponse from '@shared/http/response/ErrorResponse';
 import http from '@config/http';
-import CelebrateError from '@shared/exceptions/CelebrateError';
-import Dictionary from '@shared/exceptions/dictionary/request';
 import setupSwagger from '@config/swagger';
 
 const app = express();
@@ -27,18 +23,8 @@ initializeDataSource().then(() => {
   app.use(setupRoutes);
 
   app.use(async (error: Handler, request: express.Request, response: express.Response) => {
-      logger.info('Handling error - App.ts');
+      console.log('Handling error - App.ts');
       let handler = error;
-
-      if (isCelebrateError(error)) {
-          logger.info('Processing Celebrate error - App.ts');
-          handler = new Handler(
-              new CelebrateError().treatReturn(error),
-              Dictionary.INVALID_PARAMETERS.CODE,
-              http.OK,
-              'CelebrateError',
-          );
-      }
 
       ShowPrettyError.execute(error);
 
