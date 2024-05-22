@@ -8,7 +8,7 @@ Here are the steps to submit a pull request:
 2. Make your changes and test them thoroughly.
 3. Commit your changes with a clear and concise commit message.
 4. Push your changes to your forked repository.
-5. Open a pull request to the main repository's development branch.
+5. Open a pull request to the develop repository's development branch.
 6. Describe your changes and explain why they should be merged.
 7. Wait for feedback from the project maintainers and make any necessary changes.
 

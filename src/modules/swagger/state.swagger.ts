@@ -5,6 +5,9 @@
  *   description: State management
  */
 
+
+// Post a new state
+
 /**
  * @swagger
  * path:
@@ -27,6 +30,8 @@
  *       500:
  *         description: Server error
  */
+
+// Update a state
 
 /**
  * @swagger
@@ -54,9 +59,9 @@
  *         description: State updated successfully
  *       400:
  *         description: Bad request
- *       500:
- *         description: Server error
  */
+
+// Delete a state
 
 /**
  * @swagger
@@ -82,6 +87,8 @@
  *         description: Server error
  */
 
+// Get all states
+
 /**
  * @swagger
  * path:
@@ -92,16 +99,14 @@
  *     description: Get all states
  *     responses:
  *       200:
- *         description: A list of states
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/State'
+ *         description: States found successfully
+ *       400:
+ *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Get state by id
 
 /**
  * @swagger
@@ -109,8 +114,8 @@
  * /state/{id}:
  *   get:
  *     tags: [State]
- *     summary: Get a state by ID
- *     description: Get a state by ID
+ *     summary: Get state by id
+ *     description: Get state by id
  *     parameters:
  *       - in: path
  *         name: id
@@ -120,16 +125,14 @@
  *         description: The state id
  *     responses:
  *       200:
- *         description: State details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/State'
+ *         description: State found successfully
  *       400:
  *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Get state by country
 
 /**
  * @swagger
@@ -137,29 +140,25 @@
  * /state/findByCountry:
  *   get:
  *     tags: [State]
- *     summary: Get states by country
- *     description: Get states by country
+ *     summary: Get state by country
+ *     description: Get state by country
  *     parameters:
  *       - in: query
- *         name: country
+ *         name: country_id
  *         required: true
  *         schema:
  *           type: string
  *         description: The country id
  *     responses:
  *       200:
- *         description: List of states
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/State'
+ *         description: State found successfully
  *       400:
  *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Get state by short name
 
 /**
  * @swagger
@@ -167,27 +166,25 @@
  * /state/findByShortName:
  *   get:
  *     tags: [State]
- *     summary: Get a state by short name
- *     description: Get a state by short name
+ *     summary: Get state by short name
+ *     description: Get state by short name
  *     parameters:
  *       - in: query
- *         name: shortName
+ *         name: short_name
  *         required: true
  *         schema:
  *           type: string
  *         description: The state short name
  *     responses:
  *       200:
- *         description: State details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/State'
+ *         description: State found successfully
  *       400:
  *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Get state by long name
 
 /**
  * @swagger
@@ -195,27 +192,25 @@
  * /state/findByLongName:
  *   get:
  *     tags: [State]
- *     summary: Get a state by long name
- *     description: Get a state by long name
+ *     summary: Get state by long name
+ *     description: Get state by long name
  *     parameters:
  *       - in: query
- *         name: longName
+ *         name: long_name
  *         required: true
  *         schema:
  *           type: string
  *         description: The state long name
  *     responses:
  *       200:
- *         description: State details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/State'
+ *         description: State found successfully
  *       400:
  *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Get state by code
 
 /**
  * @swagger
@@ -223,8 +218,8 @@
  * /state/findByCode:
  *   get:
  *     tags: [State]
- *     summary: Get a state by code
- *     description: Get a state by code
+ *     summary: Get state by code
+ *     description: Get state by code
  *     parameters:
  *       - in: query
  *         name: code
@@ -234,11 +229,7 @@
  *         description: The state code
  *     responses:
  *       200:
- *         description: State details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/State'
+ *         description: State found successfully
  *       400:
  *         description: Bad request
  *       500:
