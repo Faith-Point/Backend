@@ -11,22 +11,25 @@ export const ROLE = {
           name: 'name',
           type: 'varchar',
           precision: 50,
-          isUnique: true,
+          isNullable: false,
       },
       {
           name: 'created_at',
           type: 'timestamp',
           default: 'now()',
+          isNullable: true,
       },
       {
           name: 'updated_at',
           type: 'timestamp',
           default: 'now()',
+          isNullable: true,
       },
       {
           name: 'deleted_at',
           type: 'timestamp',
           default: 'null',
+          isNullable: true,
       },
   ],
 };

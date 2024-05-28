@@ -1,31 +1,31 @@
 // @ts-nocheck
 import { Request, Response } from 'express';
 import ApiResponse from '@shared/http/response/ApiResponse';
-import AuthLoginService from '@modules/auth/service/AuthLoginService';
-import RefreshTokenService from '@modules/auth/service/RefreshTokenService';
-import LogoutService from '@modules/auth/service/LogoutService';
+import AuthLoginService from '@modules/auth/services/AuthLoginService';
+import RefreshTokenService from '@modules/auth/services/RefreshTokenService';
+import LogoutService from '@modules/auth/services/LogoutService';
 import { container } from 'tsyringe';
 import FindUserService from '@modules/users/services/FindUserService';
 
 class AuthController {
 	public async login(request: Request, response: Response): Promise<Response> {
-	  const service = container.resolve(AuthLoginService);
-  
-	  const { email, password } = request.body;
-  
-	  const auth = await service.execute({ email, password });
-  
-	  const output = await ApiResponse.execute('Login Realizado com sucesso!', auth);
-  
-	  return response.json(output);
-	}
+		const service = container.resolve(AuthLoginService);
+	  
+		const { email, password } = request.body;
+	  
+		const auth = await service.execute({ email, password });
+	  
+		const output = await ApiResponse.execute('Login Realizado com sucesso!', auth);
+	  
+		return response.json(output);
+	  }
   
 	public async refreshToken(request: Request, response: Response): Promise<Response> {
 	  const service = container.resolve(RefreshTokenService);
   
-	  const { id } = request.body;
+	  const { email } = request.body;
   
-	  const dataAuth = await service.execute(id);
+	  const dataAuth = await service.execute(email);
   
 	  const output = await ApiResponse.execute('Token atualizado com sucesso!', dataAuth);
   

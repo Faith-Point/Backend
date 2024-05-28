@@ -5,6 +5,8 @@
  *   description: City management
  */
 
+// Post a new city
+
 /**
  * @swagger
  * path:
@@ -27,6 +29,8 @@
  *       500:
  *         description: Server error
  */
+
+// Update a city
 
 /**
  * @swagger
@@ -54,9 +58,9 @@
  *         description: City updated successfully
  *       400:
  *         description: Bad request
- *       500:
- *         description: Server error
  */
+
+// Delete a city
 
 /**
  * @swagger
@@ -82,6 +86,8 @@
  *         description: Server error
  */
 
+// Find all cities
+
 /**
  * @swagger
  * path:
@@ -92,16 +98,12 @@
  *     description: Get all cities
  *     responses:
  *       200:
- *         description: A list of cities
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/City'
- *       500:
- *         description: Server error
+ *         description: Cities found successfully
+ *       400:
+ *         description: Bad request
  */
+
+// Find city by id
 
 /**
  * @swagger
@@ -109,8 +111,8 @@
  * /city/{id}:
  *   get:
  *     tags: [City]
- *     summary: Get a city by ID
- *     description: Get a city by ID
+ *     summary: Get city by id
+ *     description: Get city by id
  *     parameters:
  *       - in: path
  *         name: id
@@ -120,16 +122,12 @@
  *         description: The city id
  *     responses:
  *       200:
- *         description: City details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/City'
+ *         description: City found successfully
  *       400:
  *         description: Bad request
- *       500:
- *         description: Server error
  */
+
+// Find city by state
 
 /**
  * @swagger
@@ -137,29 +135,16 @@
  * /city/findByState:
  *   get:
  *     tags: [City]
- *     summary: Get cities by state
- *     description: Get cities by state
- *     parameters:
- *       - in: query
- *         name: state
- *         required: true
- *         schema:
- *           type: string
- *         description: The state id
+ *     summary: Get city by state
+ *     description: Get city by state
  *     responses:
  *       200:
- *         description: List of cities
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/City'
+ *         description: City found successfully
  *       400:
  *         description: Bad request
- *       500:
- *         description: Server error
  */
+
+// Find city by short name
 
 /**
  * @swagger
@@ -167,27 +152,16 @@
  * /city/findByShortName:
  *   get:
  *     tags: [City]
- *     summary: Get a city by short name
- *     description: Get a city by short name
- *     parameters:
- *       - in: query
- *         name: shortName
- *         required: true
- *         schema:
- *           type: string
- *         description: The city short name
+ *     summary: Get city by short name
+ *     description: Get city by short name
  *     responses:
  *       200:
- *         description: City details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/City'
+ *         description: City found successfully
  *       400:
  *         description: Bad request
- *       500:
- *         description: Server error
  */
+
+// Find city by long name
 
 /**
  * @swagger
@@ -195,27 +169,16 @@
  * /city/findByLongName:
  *   get:
  *     tags: [City]
- *     summary: Get a city by long name
- *     description: Get a city by long name
- *     parameters:
- *       - in: query
- *         name: longName
- *         required: true
- *         schema:
- *           type: string
- *         description: The city long name
+ *     summary: Get city by long name
+ *     description: Get city by long name
  *     responses:
  *       200:
- *         description: City details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/City'
+ *         description: City found successfully
  *       400:
  *         description: Bad request
- *       500:
- *         description: Server error
  */
+
+// Find city by code
 
 /**
  * @swagger
@@ -223,24 +186,11 @@
  * /city/findByCode:
  *   get:
  *     tags: [City]
- *     summary: Get a city by code
- *     description: Get a city by code
- *     parameters:
- *       - in: query
- *         name: code
- *         required: true
- *         schema:
- *           type: string
- *         description: The city code
+ *     summary: Get city by code
+ *     description: Get city by code
  *     responses:
  *       200:
- *         description: City details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/City'
+ *         description: City found successfully
  *       400:
  *         description: Bad request
- *       500:
- *         description: Server error
  */

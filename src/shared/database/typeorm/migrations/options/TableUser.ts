@@ -11,40 +11,48 @@ export const USER = {
           name: 'name',
           type: 'varchar',
           precision: 50,
+          isNullable: false,
       },
       {
           name: 'email',
           type: 'varchar',
           precision: 100,
           isUnique: true,
+          isNullable: false,
       },
       {
           name: 'password',
           type: 'varchar',
           precision: 255,
+          isNullable: false,
       },
       {
           name: 'role_id',
           type: 'varchar',
+          isNullable: false,
       },
       {
           name: 'address_id',
           type: 'varchar',
+          isNullable: false,
       },
       {
           name: 'created_at',
           type: 'timestamp',
           default: 'now()',
+          isNullable: true,
       },
       {
           name: 'updated_at',
           type: 'timestamp',
           default: 'now()',
+          isNullable: true,
       },
       {
           name: 'deleted_at',
           type: 'timestamp',
           default: 'null',
+          isNullable: true,
       },
   ],
   foreignKeys: [

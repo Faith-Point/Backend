@@ -11,43 +11,32 @@ Before installing Faith Point, please make sure you have the following software 
 ### Installation
 
 1.  Clone the repository to your local machine:
+    
+        ```bash
+        git clone https://github.com/Faith-Point/Backend faith-point
+        ```
 
-    ```bash
-    bashCopy codegit clone https://github.com/lucasfaria/Faith Point.git
-    ```
 2.  Navigate to the project directory:
+    
+        ```bash
+        cd faith-point
+        ```
 
-    ```bash
-    bashCopy codecd Faith Point
-    ```
-3.  Copy the sample environment file and edit it to add your own configuration:
+3.  Copy the `.env.example` file to `.env`:
+    
+        ```bash
+        cp .env.example .env
+        ```
 
-    ```bash
-    bashCopy codecp .env.example .env
-    nano .env
-    ```
-4.  Build and start the containers:
+4.  Start the application using Docker Compose:
+    
+        ```bash
+        docker-compose -f docker-compose.develop.yml up --build
+        ```
 
-    ```bash
-    bashCopy codedocker-compose up -d --build
-    ```
-5.  Install the dependencies:
+5.  Access the application at `http://localhost:3308/swagger`.
 
-    ```bash
-    bashCopy codecd backend && npm install
-    cd ../frontend && npm install
-    ```
-6.  Start the backend server:
-
-    ```bash
-    bashCopy codecd ../backend && npm run start
-    ```
-7.  Start the frontend development server:
-
-    ```bash
-    bashCopy codecd ../frontend && npm run start
-    ```
-8. Open your browser and navigate to `http://localhost:3000` to see the Faith Point application in action!
+6.  To stop the application, press `Ctrl+C` in the terminal where the application is running.
 
 ### Troubleshooting
 

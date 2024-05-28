@@ -17,5 +17,6 @@ router.use('/city', route.cityRouter);
 router.use('/address', route.addressRouter);
 router.use('/role', route.roleRouter);
 router.use('/user', route.userRouter);
+router.use('/auth', route.authRouter);
 
 export default router;

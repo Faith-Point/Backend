@@ -1,41 +1,65 @@
-version: "3.5"
+version: "3.8"
 services:
   homolog:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - NODE_ENV=homologation
     container_name: faithpoint-homolog
+    # image: your_account_id.dkr.ecr.your_region.amazonaws.com/faithpoint-app:latest
     environment:
-      - POSTGRES_USER=faithpoint
-      - POSTGRES_PASSWORD=faithpoint
-      - POSTGRES_DB=faithpoint_homolog
-      - POSTGRES_HOST=faithpoint-db
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_HOST=${DB_HOST}
+      - API_PORT=${API_PORT}
+      - API_SECRET=${API_SECRET}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - STRIPE_API_KEY=${STRIPE_API_KEY}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - LOG_PATH=${LOG_PATH}
+      - REDIS_HOST=faith-point-redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=${JWT_SECRET}
     ports:
-      - "3001:3000"
+      - "3308:3308"
     volumes:
       - .:/app
+      - /app/node_modules
     networks:
       - faithpoint-network
     depends_on:
-      - faithpoint-db
+      - faith-point
+      - faith-point-redis
+    restart: on-failure
 
-  faithpoint-db:
+  faith-point:
     image: postgres:13.3-alpine
-    container_name: faithpoint-db
+    container_name: faith-point
     environment:
-      - POSTGRES_USER=faithpoint
-      - POSTGRES_PASSWORD=faithpoint
-      - POSTGRES_DB=faithpoint_homolog
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
-      - faithpoint-db-data:/var/lib/postgresql/data
-      - ./src/config/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh      
+      - faith-point-data:/var/lib/postgresql/data
+      - ./src/config/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    ports:
+      - "5432:5432"
     networks:
       - faithpoint-network
+    restart: on-failure
 
-volumes:
-  faithpoint-db-data:
+  faith-point-redis:
+    image: redis:alpine
+    container_name: faith-point-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - faithpoint-network
+    restart: always
 
 networks:
   faithpoint-network:
+    driver: bridge
+
+volumes:
+  faith-point-data:

@@ -1,7 +1,8 @@
+import { v4 as uuidv4 } from 'uuid';
 import { inject, injectable, container } from 'tsyringe';
-import IUsersRepository from '@modules/user/domain/repositories/IUserRepository';
+import IUserRepository from '@modules/user/domain/repositories/IUserRepository';
 import authDictionary from '@shared/exceptions/dictionary/auth';
-import ICreateLogin from '@modules/auth/domain/interfaces/ICreateLogin';
+import IRequestLogin from '@shared/http/auth/request/IRequestLogin';
 import Handler from '@shared/exceptions/Handler';
 import http from '@config/http';
 import SaveLogAuth from '@modules/logAuth/services/SaveLogAuthService';
@@ -17,17 +18,20 @@ class AuthLoginService {
   saveLogAuth: SaveLogAuth;
 
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject('UserRepository')
+    private userRepository: IUserRepository,
     @inject('AuthRepository')
     private authRepository: IAuthRepository,
   ) {
     this.saveLogAuth = container.resolve(SaveLogAuth);
   }
 
-  public async execute({ email, password }: ICreateLogin): Promise<unknown> {
-    const user = await this.usersRepository.findByEmail(email);
+  public async execute({ email, password }: IRequestLogin): Promise<unknown> {
+    console.log('AuthLoginService.execute recieving:', email , password);
+    const user = await this.userRepository.findByEmail(email);
+    console.log('AuthLoginService.execute user is:', user);
     if (!user) {
+      console.log('AuthLoginService.execute user not found');
       throw new Handler(
         authDictionary.CREDENTIALS_INVALID.MESSAGE,
         authDictionary.CREDENTIALS_INVALID.CODE,
@@ -41,10 +45,17 @@ class AuthLoginService {
 
     const dataAuth = CleanDeep.execute(await this.authRepository.getAuthData(user));
 
+    console.log('AuthLoginService.execute dataAuth:', dataAuth);
+
     await UserCache.execute(auth.token, dataAuth);
 
+    console.log('AuthLoginService.execute userCache executed');
+
     const typeAuth = 'login' as unknown as typeAuth;
-    await this.saveLogAuth.execute({ user, typeAuth });
+    const dateTimeNow = new Date();
+    await this.saveLogAuth.execute({ id:uuidv4() , user, typeAuth, created_at: dateTimeNow });
+
+    console.log('AuthLoginService.execute saveLogAuth executed');
 
     return {
       dataAuth,

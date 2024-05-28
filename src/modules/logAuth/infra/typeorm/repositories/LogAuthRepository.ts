@@ -13,10 +13,12 @@ class LogAuthRepository implements ILogAuthRepository {
     this.ormRepository = AppDataSource.getRepository(LogAuth);
   }
 
-  public async register({ user, typeAuth }: ISaveLogAuth): Promise<void> {
+  public async register({ id, user, typeAuth, created_at }: ISaveLogAuth): Promise<void> {
     const logAuth = this.ormRepository.create({
+      id,
       user,
       log: typeAuth,
+      created_at,
     });
 
     await this.ormRepository.save(logAuth);

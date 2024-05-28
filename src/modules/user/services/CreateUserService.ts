@@ -4,6 +4,8 @@ import { AppError } from '@shared/exceptions/AppError';
 import IUserRepository from '@modules/user/domain/repositories/IUserRepository';
 import ICreateUser from '@modules/user/domain/interfaces/ICreateUser';
 import IFindUser from '@modules/user/domain/interfaces/IFindUser';
+import { hash } from 'bcryptjs';
+import config from '@config/bcrypt';
 
 @injectable()
 class CreateUserService {
@@ -17,11 +19,12 @@ class CreateUserService {
             throw new AppError('Missing required parameters: name, email, role or address');
         }
         const dateTimeNow = new Date();
+        const hashedPassword = await hash(parameters.password, config.bcrypt.round);
         const newUser = await this.userRepository.create({
             id: uuidv4(),
             name: parameters.name,
             email: parameters.email,
-            password: parameters.password,
+            password: hashedPassword,
             role: parameters.role,
             address: parameters.address,
             created_at: dateTimeNow,

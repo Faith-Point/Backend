@@ -49,11 +49,13 @@
 /**
  * @swagger
  * path:
- * /auth/refresh-token:
+ * /auth/refresh:
  *   post:
  *     tags: [Auth]
  *     summary: Refresh token
  *     description: Refresh token
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -61,8 +63,12 @@
  *           schema:
  *             type: object
  *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "user@example.com"
  *               refreshToken:
  *                 type: string
+ *                 example: "your-refresh-token"
  *     responses:
  *       200:
  *         description: Token refreshed successfully
@@ -82,6 +88,8 @@
  *     tags: [Auth]
  *     summary: User logout
  *     description: User logout
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -92,8 +100,6 @@
  *               email:
  *                 type: string
  *                 example: "user@example.com"
- *               token:
- *                 type: string
  *     responses:
  *       200:
  *         description: Successful logout

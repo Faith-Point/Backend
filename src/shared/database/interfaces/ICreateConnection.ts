@@ -2,7 +2,7 @@ interface ICreateConnection {
   name: string;
   type: string;
   host: string;
-  port: string | number;
+  port: number; 
   database: string;
   schema: string;
   password: string;
