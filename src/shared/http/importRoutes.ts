@@ -4,6 +4,7 @@ import cityRouter from '@modules/shared/city/infra/http/routes/City.routes';
 import addressRouter from '@modules/shared/address/infra/http/routes/Address.routes';
 import roleRouter from '@modules/role/infra/http/routes/role.routes';
 import userRouter from '@modules/user/infra/http/routes/user.routes';
+import authRouter from '@modules/auth/infra/http/routes/auth.routes';
 
 const route = {
     countryRouter,
@@ -11,7 +12,8 @@ const route = {
     cityRouter,
     addressRouter,
     roleRouter,
-    userRouter
+    userRouter,
+    authRouter
 };
 
 export default route;

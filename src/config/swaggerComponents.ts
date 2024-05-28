@@ -1,94 +1,219 @@
-// src/config/swaggerComponents.ts
-
 export const swaggerComponents = {
   components: {
-    schemas: {
-      User: {
-        type: 'object',
-        properties: {
-          id: { type: 'string', description: 'The user ID' },
-          name: { type: 'string', description: 'The user name' },
-          email: { type: 'string', description: 'The user email' },
-          password: { type: 'string', description: 'The user password' },
-          role: { $ref: '#/components/schemas/Role' },
-          address: { $ref: '#/components/schemas/Address' },
-          created_at: { type: 'string', format: 'date-time', description: 'The date the user was created' },
-          updated_at: { type: 'string', format: 'date-time', description: 'The date the user was last updated' },
-          deleted_at: { type: 'string', format: 'date-time', description: 'The date the user was deleted' },
-        },
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
       },
-      Role: {
+    },
+    schemas: {
+      Auth: {
         type: 'object',
         properties: {
-          id: { type: 'string', description: 'The role ID' },
-          name: { type: 'string', description: 'The role name' },
-          created_at: { type: 'string', format: 'date-time', description: 'The date the role was created' },
-          updated_at: { type: 'string', format: 'date-time', description: 'The date the role was last updated' },
-          deleted_at: { type: 'string', format: 'date-time', description: 'The date the role was deleted' },
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+          },
+          password: {
+            type: 'string',
+            maxLength: 255,
+          },
+        },        
+      },
+      Logout: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+          },        
+        }
+      },
+      RefreshToken: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+          },
+          refreshToken: {
+            type: 'string',
+            maxLength: 255,
+          },
+        },        
+      },
+      Country: {
+        type: 'object',
+        properties: {
+          short_name: {
+            type: 'string',
+            maxLength: 2,
+          },
+          long_name: {
+            type: 'string',
+            maxLength: 32,
+          },
+          code: {
+            type: 'string',
+            maxLength: 32,
+          },
+        },        
+      },
+      State:{
+        type: 'object',
+        properties: {
+          short_name: {
+            type: 'string',
+            maxLength: 2,
+          },
+          long_name: {
+            type: 'string',
+            maxLength: 32,
+          },
+          code: {
+            type: 'string',
+            maxLength: 32,
+          },
+          country: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+        },        
+      },
+      City: {
+        type: 'object',
+        properties: {
+          short_name: {
+            type: 'string',
+            maxLength: 2,
+          },
+          long_name: {
+            type: 'string',
+            maxLength: 32,
+          },
+          code: {
+            type: 'string',
+            maxLength: 32,
+          },
+          state: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
         },
       },
       Address: {
         type: 'object',
         properties: {
-          id: { type: 'string', description: 'The address ID' },
-          street: { type: 'string', description: 'The street name' },
-          number: { type: 'string', description: 'The street number' },
-          complement: { type: 'string', description: 'The address complement' },
-          neighborhood: { type: 'string', description: 'The neighborhood' },
-          city: { $ref: '#/components/schemas/City' },
-          created_at: { type: 'string', format: 'date-time', description: 'The date the address was created' },
-          updated_at: { type: 'string', format: 'date-time', description: 'The date the address was last updated' },
-          deleted_at: { type: 'string', format: 'date-time', description: 'The date the address was deleted' },
-        },
+          street: {
+            type: 'string',
+            maxLength: 255,
+          },
+          number: {
+            type: 'string',
+            maxLength: 32,
+          },
+          complement: {
+            type: 'string',
+            maxLength: 255,
+          },
+          neighborhood: {
+            type: 'string',
+            maxLength: 255,
+          },
+          city: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+        },        
       },
-      City: {
+      Role: {
         type: 'object',
         properties: {
-          id: { type: 'string', description: 'The city ID' },
-          name: { type: 'string', description: 'The city name' },
-          state: { $ref: '#/components/schemas/State' },
-          created_at: { type: 'string', format: 'date-time', description: 'The date the city was created' },
-          updated_at: { type: 'string', format: 'date-time', description: 'The date the city was last updated' },
-          deleted_at: { type: 'string', format: 'date-time', description: 'The date the city was deleted' },
-        },
+          name: {
+            type: 'string',
+            maxLength: 32,
+          },
+          description: {
+            type: 'string',
+            maxLength: 255,
+          },
+        },        
       },
-      State: {
+      User: {
         type: 'object',
         properties: {
-          id: { type: 'string', description: 'The state ID' },
-          name: { type: 'string', description: 'The state name' },
-          country: { $ref: '#/components/schemas/Country' },
-          created_at: { type: 'string', format: 'date-time', description: 'The date the state was created' },
-          updated_at: { type: 'string', format: 'date-time', description: 'The date the state was last updated' },
-          deleted_at: { type: 'string', format: 'date-time', description: 'The date the state was deleted' },
-        },
+          name: {
+            type: 'string',
+            maxLength: 255,
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+          },
+          password: {
+            type: 'string',
+            maxLength: 255,
+          },
+          role: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          address: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+        },        
       },
-      Country: {
+      LogAuth: {
         type: 'object',
         properties: {
-          id: { type: 'string', description: 'The country ID' },
-          name: { type: 'string', description: 'The country name' },
-          created_at: { type: 'string', format: 'date-time', description: 'The date the country was created' },
-          updated_at: { type: 'string', format: 'date-time', description: 'The date the country was last updated' },
-          deleted_at: { type: 'string', format: 'date-time', description: 'The date the country was deleted' },
+          user: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          token: {
+            type: 'string',
+            maxLength: 255,
+          },
         },
-      Auth: {
-        type: 'object',
-        properties: {
-          email: { type: 'string', description: 'The user email' },
-          password: { type: 'string', description: 'The user password' },
-        },
-      },
-      TypeAuth: {
-        type: 'object',
-        properties: {
-          user: { $ref: '#/components/schemas/User' },
-          log: { $ref: '#/components/schemas/Log' },
-        },
-      },
-      }
       },
     },
-  };
+  },
+};
 
 export default swaggerComponents;

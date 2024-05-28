@@ -4,14 +4,13 @@ import {
     ManyToOne,
     Column,
     CreateDateColumn,
-    UpdateDateColumn,
     JoinColumn,
   } from 'typeorm';
   import ILogAuth from '@modules/logAuth/domain/interfaces/ILogAuth';
   import ITypeAuth from '@modules/logAuth/domain/interfaces/ITypeAuth';
   import User from '@modules/user/infra/typeorm/entities/User';
   
-  @Entity('log_auths')
+  @Entity('log_auth')
   class LogAuth implements ILogAuth {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -28,9 +27,6 @@ import {
   
     @CreateDateColumn()
     created_at: Date;
-  
-    @UpdateDateColumn()
-    updated_at: Date;
   }
   
   export default LogAuth;

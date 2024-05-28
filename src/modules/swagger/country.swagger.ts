@@ -5,6 +5,8 @@
  *   description: Country management
  */
 
+// Post a new country
+
 /**
  * @swagger
  * path:
@@ -27,6 +29,8 @@
  *       500:
  *         description: Server error
  */
+
+// Update a country
 
 /**
  * @swagger
@@ -51,12 +55,14 @@
  *             $ref: '#/components/schemas/Country'
  *     responses:
  *       200:
- *         description: Country updated
+ *         description: Country updated successfully
  *       400:
  *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Delete a country
 
 /**
  * @swagger
@@ -82,6 +88,8 @@
  *         description: Server error
  */
 
+// Get all countries
+
 /**
  * @swagger
  * path:
@@ -92,16 +100,12 @@
  *     description: Get all countries
  *     responses:
  *       200:
- *         description: A list of countries
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Country'
+ *         description: Countries retrieved successfully
  *       500:
  *         description: Server error
  */
+
+// Get country by id
 
 /**
  * @swagger
@@ -109,8 +113,8 @@
  * /country/{id}:
  *   get:
  *     tags: [Country]
- *     summary: Get a country by ID
- *     description: Get a country by ID
+ *     summary: Get country by id
+ *     description: Get country by id
  *     parameters:
  *       - in: path
  *         name: id
@@ -120,16 +124,14 @@
  *         description: The country id
  *     responses:
  *       200:
- *         description: Country details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Country'
+ *         description: Country retrieved successfully
  *       400:
  *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Get country by code
 
 /**
  * @swagger
@@ -137,8 +139,8 @@
  * /country/findByCode:
  *   get:
  *     tags: [Country]
- *     summary: Get a country by code
- *     description: Get a country by code
+ *     summary: Get country by code
+ *     description: Get country by code
  *     parameters:
  *       - in: query
  *         name: code
@@ -148,16 +150,14 @@
  *         description: The country code
  *     responses:
  *       200:
- *         description: Country details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Country'
+ *         description: Country retrieved successfully
  *       400:
  *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Get country by short name
 
 /**
  * @swagger
@@ -165,27 +165,25 @@
  * /country/findByShortName:
  *   get:
  *     tags: [Country]
- *     summary: Get a country by short name
- *     description: Get a country by short name
+ *     summary: Get country by short name
+ *     description: Get country by short name
  *     parameters:
  *       - in: query
- *         name: shortName
+ *         name: short_name
  *         required: true
  *         schema:
  *           type: string
  *         description: The country short name
  *     responses:
  *       200:
- *         description: Country details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Country'
+ *         description: Country retrieved successfully
  *       400:
  *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Get country by long name
 
 /**
  * @swagger
@@ -193,22 +191,18 @@
  * /country/findByLongName:
  *   get:
  *     tags: [Country]
- *     summary: Get a country by long name
- *     description: Get a country by long name
+ *     summary: Get country by long name
+ *     description: Get country by long name
  *     parameters:
  *       - in: query
- *         name: longName
+ *         name: long_name
  *         required: true
  *         schema:
  *           type: string
  *         description: The country long name
  *     responses:
  *       200:
- *         description: Country details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Country'
+ *         description: Country retrieved successfully
  *       400:
  *         description: Bad request
  *       500:

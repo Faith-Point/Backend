@@ -5,6 +5,8 @@
  *   description: Address management
  */
 
+// Post a new address
+
 /**
  * @swagger
  * path:
@@ -28,14 +30,16 @@
  *         description: Server error
  */
 
+// Update a address
+
 /**
  * @swagger
  * path:
  * /address/{id}:
  *   put:
  *     tags: [Address]
- *     summary: Update an address
- *     description: Update an address
+ *     summary: Update a address
+ *     description: Update a address
  *     parameters:
  *       - in: path
  *         name: id
@@ -58,14 +62,16 @@
  *         description: Server error
  */
 
+// Delete a address
+
 /**
  * @swagger
  * path:
  * /address/{id}:
  *   delete:
  *     tags: [Address]
- *     summary: Delete an address
- *     description: Delete an address
+ *     summary: Delete a address
+ *     description: Delete a address
  *     parameters:
  *       - in: path
  *         name: id
@@ -82,26 +88,26 @@
  *         description: Server error
  */
 
+// Find all addresses
+
 /**
  * @swagger
  * path:
  * /address:
  *   get:
  *     tags: [Address]
- *     summary: Get all addresses
- *     description: Get all addresses
+ *     summary: Find all addresses
+ *     description: Find all addresses
  *     responses:
  *       200:
- *         description: A list of addresses
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Address'
+ *         description: Address list
+ *       400:
+ *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Find address by id
 
 /**
  * @swagger
@@ -109,8 +115,8 @@
  * /address/{id}:
  *   get:
  *     tags: [Address]
- *     summary: Get an address by ID
- *     description: Get an address by ID
+ *     summary: Find address by id
+ *     description: Find address by id
  *     parameters:
  *       - in: path
  *         name: id
@@ -120,16 +126,14 @@
  *         description: The address id
  *     responses:
  *       200:
- *         description: Address details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Address'
+ *         description: Address found successfully
  *       400:
  *         description: Bad request
  *       500:
  *         description: Server error
  */
+
+// Find address by city
 
 /**
  * @swagger
@@ -137,24 +141,18 @@
  * /address/findByCity:
  *   get:
  *     tags: [Address]
- *     summary: Get addresses by city
- *     description: Get addresses by city
+ *     summary: Find address by city
+ *     description: Find address by city
  *     parameters:
  *       - in: query
- *         name: city
+ *         name: id
  *         required: true
  *         schema:
  *           type: string
  *         description: The city id
  *     responses:
  *       200:
- *         description: List of addresses
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Address'
+ *         description: Address found successfully
  *       400:
  *         description: Bad request
  *       500:

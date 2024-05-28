@@ -10,6 +10,7 @@ export const LOG_AUTH = {
       {
           name: 'user_id',
           type: 'varchar',
+          isNullable: false,
       },
       {
         name: 'log',
@@ -22,6 +23,7 @@ export const LOG_AUTH = {
           name: 'created_at',
           type: 'timestamp',
           default: 'now()',
+          isNullable: true,
       },
   ],
   foreignKeys: [

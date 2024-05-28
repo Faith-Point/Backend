@@ -2,42 +2,36 @@
 
 Before running the application, you need to configure the environment variables for each service.
 
-1. Database:
+In root directory has a file called `.env.example`, you need to copy this file and rename it to `.env`. if you want to use Docker, its not necessary change any configuration, but if you want to run the application without Docker, you need to change the environment variables.
 
-The database service can be configured through the following environment variables:
+## Environment Variables
+You need in .env file modify the following environment variables:
 
-* `DB_HOST`: The hostname of the database server. Defaults to `localhost`.
-* `DB_PORT`: The port number of the database server. Defaults to `5432`.
-* `DB_NAME`: The name of the database. Defaults to `Faith Point`.
-* `DB_USER`: The username used to authenticate with the database server. Defaults to `Faith Point`.
-* `DB_PASSWORD`: The password used to authenticate with the database server. Defaults to `password`.
+### API
+API_PORT= The port that the API will run
 
-You can modify these variables by editing the `.env` file located in the `backend` folder.
+### Database
+DB_HOST=localhost
+DB_PORT= The port that the database will run
+DB_USER= The user of the database
+DB_PASS= The password of the database
 
-2. Redis:
+### Redis
+REDIS_HOST=localhost
+REDIS_PORT= The port that the redis will run
 
-The Redis service can be configured through the following environment variables:
+Ensure that database faith-point is created in your database. If not, you can create it.
 
-* `REDIS_HOST`: The hostname of the Redis server. Defaults to `localhost`.
-* `REDIS_PORT`: The port number of the Redis server. Defaults to `6379`.
+## ormconfig.json
 
-You can modify these variables by editing the `.env` file located in the `backend` folder.
+In the root directory has a file called `ormconfig.json`, if you want ro run locally, you need to change the host, port, username and password of the database.
 
-3. Application:
-
-The application can be configured through the following environment variables:
-
-* `PORT`: The port number on which the application will listen for incoming requests. Defaults to `3000`.
-* `NODE_ENV`: The environment in which the application is running. Defaults to `development`.
-
-You can modify these variables by editing the `.env` file located in the root folder of the project.
-
-After configuring the environment variables, you can start the application by running the following commands:
-
-```bash
-bashCopy codecd backend
-npm install
-npm start
+```json
+{
+    "host": "localhost",
+    "port": 0000 // Port of the database
+    "username": "root", // User of the database
+    "password": "root", // Password of the database
+}
 ```
 
-This will start the application on the port specified in the environment variables. You can access the application by opening a web browser and navigating to `http://localhost:<PORT>` (where `<PORT>` is the port number specified in the environment variables)
