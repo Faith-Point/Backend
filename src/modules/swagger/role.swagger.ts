@@ -129,29 +129,3 @@
  *       500:
  *         description: Server error
  */
-
-// Get by role
-
-/**
- * @swagger
- * path:
- * /findByRole:
- *  get:
- *   tags: [Role]
- *  summary: Get by role
- * description: Get by role
- * parameters:
- * - in: query
- * name: role
- * required: true
- * schema:
- * type: string
- * description: The role
- * responses:
- * 200:
- * description: Role found successfully
- * 400:
- * description: Bad request
- * 500:
- * description: Server error
- */

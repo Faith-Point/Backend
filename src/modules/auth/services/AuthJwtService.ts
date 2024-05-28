@@ -13,6 +13,7 @@ class AuthJwtService {
 
     // Verifique se a chave secreta está definida
     if (!auth.jwt.secret) {
+      console.log('AuthJwtService.sign auth.jwt.secret:', auth.jwt.secret);
       throw new Error('JWT secret is not defined in configuration');
     }
 

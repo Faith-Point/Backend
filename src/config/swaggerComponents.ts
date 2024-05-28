@@ -1,15 +1,54 @@
-// src/config/swaggerComponents.ts
-
 export const swaggerComponents = {
   components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
     schemas: {
+      Auth: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+          },
+          password: {
+            type: 'string',
+            maxLength: 255,
+          },
+        },        
+      },
+      Logout: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+          },        
+        }
+      },
+      RefreshToken: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+          },
+          refreshToken: {
+            type: 'string',
+            maxLength: 255,
+          },
+        },        
+      },
       Country: {
         type: 'object',
         properties: {
-          id: {
-            type: 'string',
-            format: 'uuid',
-          },
           short_name: {
             type: 'string',
             maxLength: 2,
@@ -21,28 +60,12 @@ export const swaggerComponents = {
           code: {
             type: 'string',
             maxLength: 32,
-          },
-          created_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          updated_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          deleted_at: {
-            type: 'string',
-            format: 'date-time',
           },
         },        
       },
       State:{
         type: 'object',
         properties: {
-          id: {
-            type: 'string',
-            format: 'uuid',
-          },
           short_name: {
             type: 'string',
             maxLength: 2,
@@ -55,30 +78,20 @@ export const swaggerComponents = {
             type: 'string',
             maxLength: 32,
           },
-          country_id: {
-           $ref: '#/components/schemas/Country',
-          },
-          created_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          updated_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          deleted_at: {
-            type: 'string',
-            format: 'date-time',
+          country: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
           },
         },        
       },
       City: {
         type: 'object',
         properties: {
-          id: {
-            type: 'string',
-            format: 'uuid',
-          },
           short_name: {
             type: 'string',
             maxLength: 2,
@@ -91,30 +104,20 @@ export const swaggerComponents = {
             type: 'string',
             maxLength: 32,
           },
-          state_id: {
-            $ref: '#/components/schemas/State',
-          },
-          created_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          updated_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          deleted_at: {
-            type: 'string',
-            format: 'date-time',
+          state: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
           },
         },
       },
       Address: {
         type: 'object',
         properties: {
-          id: {
-            type: 'string',
-            format: 'uuid',
-          },
           street: {
             type: 'string',
             maxLength: 255,
@@ -131,30 +134,20 @@ export const swaggerComponents = {
             type: 'string',
             maxLength: 255,
           },
-          city_id: {
-            $ref: '#/components/schemas/City',
-          },
-          created_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          updated_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          deleted_at: {
-            type: 'string',
-            format: 'date-time',
+          city: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
           },
         },        
       },
       Role: {
         type: 'object',
         properties: {
-          id: {
-            type: 'string',
-            format: 'uuid',
-          },
           name: {
             type: 'string',
             maxLength: 32,
@@ -163,27 +156,11 @@ export const swaggerComponents = {
             type: 'string',
             maxLength: 255,
           },
-          created_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          updated_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          deleted_at: {
-            type: 'string',
-            format: 'date-time',
-          },
         },        
       },
       User: {
         type: 'object',
         properties: {
-          id: {
-            type: 'string',
-            format: 'uuid',
-          },
           name: {
             type: 'string',
             maxLength: 255,
@@ -197,54 +174,44 @@ export const swaggerComponents = {
             type: 'string',
             maxLength: 255,
           },
-          role_id: {
-            $ref: '#/components/schemas/Role',
+          role: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
           },
-          address_id: {
-            $ref: '#/components/schemas/Address',
-          },
-          created_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          updated_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          deleted_at: {
-            type: 'string',
-            format: 'date-time',
+          address: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
           },
         },        
       },
       LogAuth: {
         type: 'object',
         properties: {
-          id: {
-            type: 'string',
-            format: 'uuid',
-          },
-          user_id: {
-            $ref: '#/components/schemas/User',
+          user: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
           },
           token: {
             type: 'string',
             maxLength: 255,
           },
-          created_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          updated_at: {
-            type: 'string',
-            format: 'date-time',
-          },
-          deleted_at: {
-            type: 'string',
-            format: 'date-time',
-          },
         },
-      }
+      },
     },
   },
 };

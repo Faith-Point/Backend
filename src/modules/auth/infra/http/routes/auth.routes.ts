@@ -20,6 +20,6 @@ const validate = (req: Request, res: Response, next: NextFunction): void => {
 
 routes.post('/login', loginValidate, validate, controller.login);
 routes.post('/logout', isAuthenticated, controller.logout);
-routes.post('/refresh/token', refreshTokenValidate, validate, validateRefreshToken, controller.refreshToken);
+routes.post('/refresh', refreshTokenValidate, validate, validateRefreshToken, controller.refreshToken);
 
 export default routes;

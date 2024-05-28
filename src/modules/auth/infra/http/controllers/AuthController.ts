@@ -9,7 +9,6 @@ import FindUserService from '@modules/users/services/FindUserService';
 
 class AuthController {
 	public async login(request: Request, response: Response): Promise<Response> {
-		console.log('AuthController.login', request.body);
 		const service = container.resolve(AuthLoginService);
 	  
 		const { email, password } = request.body;
