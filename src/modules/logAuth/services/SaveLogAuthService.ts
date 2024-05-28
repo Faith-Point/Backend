@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { inject, injectable } from 'tsyringe';
 import ILogAuthRepository from '@modules/logAuth/domain/repositories/ILogAuthRepository';
 import ISaveLogAuth from '@modules/logAuth/domain/interfaces/ISaveLogAuth';
@@ -10,7 +11,15 @@ class SaveLogAuthService {
   ) {}
 
   public async execute({ user, typeAuth }: ISaveLogAuth): Promise<void> {
-    await this.logAuthRepository.register({ user, typeAuth });
+    const logAuth = {
+      id: uuidv4(),
+      user,
+      typeAuth,
+      created_at: new Date(),
+    };
+
+    await this.logAuthRepository.register(logAuth);
+    console.log('SaveLogAuthService.execute logAuthRepository.register executed', logAuth);
   }
 }
 

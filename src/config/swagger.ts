@@ -18,6 +18,11 @@ const options = {
       },
     ],
     components: swaggerComponents.components,
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   apis: [
     './src/modules/**/infra/http/routes/*.ts',

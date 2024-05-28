@@ -19,7 +19,6 @@ class CacheRedis {
 
   public async recover<T>(key: string): Promise<T | null> {
     const data = await this.client.get(key);
-
     if (!data) {
       return null;
     }
