@@ -212,6 +212,27 @@ export const swaggerComponents = {
           },
         },
       },
+      SocialMedia: {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string',
+            maxLength: 32,
+          },
+          description: {
+            type: 'string',
+            maxLength: 255,
+          },
+          link: {
+            type: 'string',
+            maxLength: 255,
+          },
+          icon: {
+            type: 'string',
+            maxLength: 255,
+          },
+        },        
+      }
     },
   },
 };
