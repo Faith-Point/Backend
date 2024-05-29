@@ -18,5 +18,14 @@ router.use('/address', route.addressRouter);
 router.use('/role', route.roleRouter);
 router.use('/user', route.userRouter);
 router.use('/auth', route.authRouter);
+// router.use('/faithPoint', route.faithPoint);
+// router.use('/faithPoint/Image', route.faithPointImage);
+// router.use('/faithPoint/Rating', route.faithPointRating);
+// router.use('/faithPoint/Religions', route.faithPointReligions);
+// router.use('/faithPoint/Schedule', route.faithPointSchedule);
+// router.use('/faithPoint/Service', route.faithPointService);
+// router.use('/faithPoint/Subscription', route.faithPointSubscription);
+// router.use('/contact', route.contactRouter);
+// router.use('/socialMedia', route.socialMediaRouter);
 
 export default router;
