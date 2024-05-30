@@ -264,6 +264,55 @@ export const swaggerComponents = {
           },
         },        
       },
+      FaithPoint: {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string',
+            maxLength: 255,
+          },
+          description: {
+            type: 'string',
+            maxLength: 255,
+          },
+          address: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          contact: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          socialMedia: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          religion: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+        },        
+      },
     },
   },
 };
