@@ -12,7 +12,7 @@ import authRouter from '@modules/auth/infra/http/routes/auth.routes';
 // import faithPointSchedule from '@modules/faithPoint/schedule/infra/http/routes/faithPointSchedule.routes';
 // import faithPointService from '@modules/faithPoint/service/infra/http/routes/faithPointService.routes';
 // import faithPointSubscription from '@modules/faithPoint/subscription/infra/http/routes/faithPointSubscription.routes';
-// import contactRouter from '@modules/shared/contact/infra/http/routes/Contact.routes';
+import contactRouter from '@modules/shared/contact/infra/http/routes/Contact.routes';
 import socialMediaRouter from '@modules/shared/socialMedia/infra/http/routes/SocialMedia.routes';
 
 const route = {
@@ -30,7 +30,7 @@ const route = {
     // faithPointSchedule,
     // faithPointService,
     // faithPointSubscription,
-    // contactRouter,
+    contactRouter,
     socialMediaRouter    
 };
 

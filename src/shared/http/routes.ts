@@ -25,7 +25,7 @@ router.use('/auth', route.authRouter);
 // router.use('/faithPoint/Schedule', route.faithPointSchedule);
 // router.use('/faithPoint/Service', route.faithPointService);
 // router.use('/faithPoint/Subscription', route.faithPointSubscription);
-// router.use('/contact', route.contactRouter);
+router.use('/contact', route.contactRouter);
 router.use('/socialMedia', route.socialMediaRouter);
 
 export default router;

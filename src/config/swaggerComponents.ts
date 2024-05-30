@@ -232,7 +232,25 @@ export const swaggerComponents = {
             maxLength: 255,
           },
         },        
-      }
+      },
+      Contact: {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string',
+            maxLength: 255,
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+          },
+          phone: {
+            type: 'string',
+            maxLength: 32,
+          },
+        },        
+      },
     },
   },
 };
