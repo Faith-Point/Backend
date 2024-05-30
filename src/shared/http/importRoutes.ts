@@ -8,7 +8,7 @@ import authRouter from '@modules/auth/infra/http/routes/auth.routes';
 // import faithPoint from '@modules/faithPoint/faith_point/infra/http/routes/faithPoint.routes';
 // import faithPointImage from '@modules/faithPoint/image/infra/http/routes/faithPointImage.routes';
 // import faithPointRating from '@modules/faithPoint/rating/infra/http/routes/faithPointRating.routes';
-// import faithPointReligions from '@modules/faithPoint/religions/infra/http/routes/faithPointReligions.routes';
+import faithPointReligions from '@modules/faithPoint/religions/infra/http/routes/Religion.routes';
 // import faithPointSchedule from '@modules/faithPoint/schedule/infra/http/routes/faithPointSchedule.routes';
 // import faithPointService from '@modules/faithPoint/service/infra/http/routes/faithPointService.routes';
 // import faithPointSubscription from '@modules/faithPoint/subscription/infra/http/routes/faithPointSubscription.routes';
@@ -26,7 +26,7 @@ const route = {
     // faithPoint,
     // faithPointImage,
     // faithPointRating,
-    // faithPointReligions,
+    faithPointReligions,
     // faithPointSchedule,
     // faithPointService,
     // faithPointSubscription,
