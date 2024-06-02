@@ -68,15 +68,7 @@ class FaithPointRepository implements IFaitPointRepository{
         throw new Error('Social Media not found');
       }
 
-      const faithPoint = this.ormRepository.create({
-        name: parameters.name,
-        description: parameters.description,
-        address,
-        religion,
-        contact,
-        socialMedia
-      });
-
+      const faithPoint = this.ormRepository.create(parameters);
       await this.ormRepository.save(faithPoint);
       return this.mapToIFindFaithPoint(faithPoint);
     } catch (error) {

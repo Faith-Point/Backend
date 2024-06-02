@@ -22,40 +22,22 @@ export const FAITH_POINT = {
       {
           name: 'address_id',
           type: 'uuid',
-          isNullable: false,          
+          isNullable: true,          
       },
       {
           name: 'religion_id',
           type: 'uuid',
-          isNullable: false,
+          isNullable: true,
       },
       {
           name: 'contact_id',
           type: 'uuid',
-          isNullable: false,
+          isNullable: true,
       },
       {
           name: 'social_media_id',
           type: 'uuid',
-          isNullable: false,
-      },
-      {
-          name: 'latitude',
-          type: 'varchar',
-          length: 50,
-          isNullable: false,
-      },
-      {
-          name: 'longitude',
-          type: 'varchar',
-          length: 50,
-          isNullable: false,
-      },
-      {
-          name: 'status',
-          type: 'varchar',
-          length: 20,
-          isNullable: false,
+          isNullable: true,
       },
       {
           name: 'created_at',

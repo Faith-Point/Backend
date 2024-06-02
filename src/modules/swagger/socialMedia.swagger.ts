@@ -1,8 +1,8 @@
 /**
  * @swagger
  * tags:
- *   - name: SocialMedia
- *     description: SocialMedia management
+ *   name: Social Media
+ *   description: Social Media management
  */
 
 // Post a new socialMedia
@@ -13,7 +13,7 @@
  * /socialMedia:
  *   post:
  *     tags: [SocialMedia]
- *     summary: Create a new socialMedia
+ *     summary: Create a new Social Media
  *     description: Create a new socialMedia
  *     requestBody:
  *       required: true
@@ -23,7 +23,7 @@
  *             $ref: '#/components/schemas/SocialMedia'
  *     responses:
  *       200:
- *         description: SocialMedia created successfully
+ *         description: Social Media created successfully
  *       400:
  *         description: Bad request
  *       500:
@@ -58,7 +58,7 @@
  *         description: SocialMedia updated successfully
  *       400:
  *         description: Bad request
- *      500:
+ *       500:
  *         description: Server error
  */
 

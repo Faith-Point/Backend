@@ -284,6 +284,15 @@ export const swaggerComponents = {
               }
             }
           },
+          religion: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
           contact: {
             type: 'object',
             properties: {
@@ -302,16 +311,7 @@ export const swaggerComponents = {
               }
             }
           },
-          religion: {
-            type: 'object',
-            properties: {
-              id: {
-                type: 'string',
-                maxLength: 32,
-              }
-            }
-          },
-        },        
+        }      
       },
     },
   },
