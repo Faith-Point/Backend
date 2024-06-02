@@ -19,12 +19,12 @@ export const FAITH_POINT_SCHEDULE = {
       },
       {
           name: 'start_time',
-          type: 'time',
+          type: 'timestamp',
           isNullable: false,
       },
       {
           name: 'end_time',
-          type: 'time',
+          type: 'timestamp',
           isNullable: false,
       },
       {

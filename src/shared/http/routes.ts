@@ -22,7 +22,7 @@ router.use('/faithPoint', route.faithPoint);
 router.use('/faithPoint/Image', route.faithPointImage);
 // router.use('/faithPoint/Rating', route.faithPointRating);
 router.use('/faithPoint/Religions', route.faithPointReligions);
-// router.use('/faithPoint/Schedule', route.faithPointSchedule);
+router.use('/faithPoint/Schedule', route.faithPointSchedule);
 // router.use('/faithPoint/Service', route.faithPointService);
 // router.use('/faithPoint/Subscription', route.faithPointSubscription);
 router.use('/contact', route.contactRouter);

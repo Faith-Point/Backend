@@ -9,7 +9,7 @@ import faithPoint from '@modules/faithPoint/faith_point/infra/http/routes/FaithP
 import faithPointImage from '@modules/faithPoint/image/infra/http/routes/FaithPointImage.routes';
 // import faithPointRating from '@modules/faithPoint/rating/infra/http/routes/faithPointRating.routes';
 import faithPointReligions from '@modules/faithPoint/religions/infra/http/routes/Religion.routes';
-// import faithPointSchedule from '@modules/faithPoint/schedule/infra/http/routes/faithPointSchedule.routes';
+import faithPointSchedule from '@modules/faithPoint/schedule/infra/http/routes/FaithPointSchedule.routes';
 // import faithPointService from '@modules/faithPoint/service/infra/http/routes/faithPointService.routes';
 // import faithPointSubscription from '@modules/faithPoint/subscription/infra/http/routes/faithPointSubscription.routes';
 import contactRouter from '@modules/shared/contact/infra/http/routes/Contact.routes';
@@ -27,7 +27,7 @@ const route = {
     faithPointImage,
     // faithPointRating,
     faithPointReligions,
-    // faithPointSchedule,
+    faithPointSchedule,
     // faithPointService,
     // faithPointSubscription,
     contactRouter,

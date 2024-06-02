@@ -331,6 +331,32 @@ export const swaggerComponents = {
           },
         },        
       },
+      FaithPointSchedule: {
+        type: 'object',
+        properties: {
+          faith_point: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          date: {
+            type: 'string',
+            format: 'date',
+          },
+          start_time: {
+            type: 'string',
+            format: 'time',
+          },
+          end_time: {
+            type: 'string',
+            format: 'time',
+          },
+        },        
+      },
     },
   },
 };
