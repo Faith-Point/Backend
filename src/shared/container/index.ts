@@ -19,3 +19,4 @@ import '@modules/shared/socialMedia/infra/container/index';
 import '@modules/shared/contact/infra/container/index';
 import '@modules/faithPoint/religions/infra/container/index';
 import '@modules/faithPoint/faith_point/infra/container/index';
+import '@modules/faithPoint/image/infra/container/index';

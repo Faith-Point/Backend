@@ -313,6 +313,24 @@ export const swaggerComponents = {
           },
         }      
       },
+      FaithPointImage: {
+        type: 'object',
+        properties: {
+          faith_point: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          url: {
+            type: 'string',
+            maxLength: 255,
+          },
+        },        
+      },
     },
   },
 };

@@ -6,7 +6,7 @@ import roleRouter from '@modules/role/infra/http/routes/role.routes';
 import userRouter from '@modules/user/infra/http/routes/user.routes';
 import authRouter from '@modules/auth/infra/http/routes/auth.routes';
 import faithPoint from '@modules/faithPoint/faith_point/infra/http/routes/FaithPoint.routes';
-// import faithPointImage from '@modules/faithPoint/image/infra/http/routes/faithPointImage.routes';
+import faithPointImage from '@modules/faithPoint/image/infra/http/routes/FaithPointImage.routes';
 // import faithPointRating from '@modules/faithPoint/rating/infra/http/routes/faithPointRating.routes';
 import faithPointReligions from '@modules/faithPoint/religions/infra/http/routes/Religion.routes';
 // import faithPointSchedule from '@modules/faithPoint/schedule/infra/http/routes/faithPointSchedule.routes';
@@ -24,7 +24,7 @@ const route = {
     userRouter,
     authRouter,
     faithPoint,
-    // faithPointImage,
+    faithPointImage,
     // faithPointRating,
     faithPointReligions,
     // faithPointSchedule,
