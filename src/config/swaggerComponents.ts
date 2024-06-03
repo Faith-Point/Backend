@@ -387,6 +387,32 @@ export const swaggerComponents = {
           },
         },        
       },
+      FaithPointSubscription: {
+        type: 'object',
+        properties: {
+          faith_point: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          user: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          is_active: {
+            type: 'boolean',          
+          }
+        },        
+      },
     },
   },
 };

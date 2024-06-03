@@ -24,7 +24,7 @@ router.use('/faithPointImage', route.faithPointImage);
 router.use('/faithPointReligions', route.faithPointReligions);
 router.use('/faithPointSchedule', route.faithPointSchedule);
 router.use('/faithPointService', route.faithPointService);
-// router.use('/faithPoint/Subscription', route.faithPointSubscription);
+router.use('/faithPointSubscription', route.faithPointSubscription);
 router.use('/contact', route.contactRouter);
 router.use('/socialMedia', route.socialMediaRouter);
 
