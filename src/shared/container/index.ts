@@ -21,3 +21,4 @@ import '@modules/faithPoint/religions/infra/container/index';
 import '@modules/faithPoint/faith_point/infra/container/index';
 import '@modules/faithPoint/image/infra/container/index';
 import '@modules/faithPoint/schedule/infra/container/index';
+import  '@modules/faithPoint/service/infra/container/index';

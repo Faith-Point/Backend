@@ -365,6 +365,28 @@ export const swaggerComponents = {
           end_time: '2024-06-02T15:00:00',
         }      
       },
+      FaithPointService: {
+        type: 'object',
+        properties: {
+          faith_point: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          name: {
+            type: 'string',
+            maxLength: 255,
+          },
+          description: {
+            type: 'string',
+            maxLength: 255,          
+          },
+        },        
+      },
     },
   },
 };
