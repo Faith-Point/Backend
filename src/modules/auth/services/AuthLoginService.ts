@@ -27,11 +27,8 @@ class AuthLoginService {
   }
 
   public async execute({ email, password }: IRequestLogin): Promise<unknown> {
-    console.log('AuthLoginService.execute recieving:', email , password);
     const user = await this.userRepository.findByEmail(email);
-    console.log('AuthLoginService.execute user is:', user);
     if (!user) {
-      console.log('AuthLoginService.execute user not found');
       throw new Handler(
         authDictionary.CREDENTIALS_INVALID.MESSAGE,
         authDictionary.CREDENTIALS_INVALID.CODE,
@@ -45,17 +42,11 @@ class AuthLoginService {
 
     const dataAuth = CleanDeep.execute(await this.authRepository.getAuthData(user));
 
-    console.log('AuthLoginService.execute dataAuth:', dataAuth);
-
     await UserCache.execute(auth.token, dataAuth);
-
-    console.log('AuthLoginService.execute userCache executed');
 
     const typeAuth = 'login' as unknown as typeAuth;
     const dateTimeNow = new Date();
     await this.saveLogAuth.execute({ id:uuidv4() , user, typeAuth, created_at: dateTimeNow });
-
-    console.log('AuthLoginService.execute saveLogAuth executed');
 
     return {
       dataAuth,

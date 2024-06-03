@@ -1,48 +1,46 @@
 export const COUNTRY = {
 	name: 'country',
 	columns: [
-		{
-			name: 'id',
-			type: 'varchar',
-			isPrimary: true,
-			generationStrategy: 'uuid',
-		},
-		{
-			name: 'short_name',
-			type: 'char',
-			precision: 2,
-			isNullable: false,			
-		},
-		{
-			name: 'long_name',
-			type: 'varchar',
-			precision: 32,
-			isNullable: false,
-		},
-		{
-			name: 'code',
-			type: 'varchar',
-			precision: 32,
-			isNullable: false,
-		},
-		{
-			name: 'created_at',
-			type: 'timestamp',
-			default: 'now()',
-			isNullable: true,
-		},
-		{
-			name: 'updated_at',
-			type: 'timestamp',
-			default: 'null',
-			isNullable: true,
-		},
-		{
-			name: 'deleted_at',
-			type: 'timestamp',
-			default: 'null',
-			isNullable: true,
-		},
+			{
+					name: 'id',
+					type: 'uuid',
+					isPrimary: true,
+					generationStrategy: 'uuid',
+			},
+			{
+					name: 'short_name',
+					type: 'varchar',
+					length: 50,
+					isNullable: false,            
+			},
+			{
+					name: 'long_name',
+					type: 'varchar',
+					length: 100,
+					isNullable: false,
+			},
+			{
+					name: 'code',
+					type: 'varchar',
+					length: 10,
+					isNullable: false,
+			},
+			{
+					name: 'created_at',
+					type: 'timestamp',
+					default: 'now()',
+					isNullable: true,
+			},
+			{
+					name: 'updated_at',
+					type: 'timestamp',
+					isNullable: true,
+			},
+			{
+					name: 'deleted_at',
+					type: 'timestamp',
+					isNullable: true,
+			},
 	],
 };
 

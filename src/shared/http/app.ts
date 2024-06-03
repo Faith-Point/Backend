@@ -23,7 +23,6 @@ initializeDataSource().then(() => {
   app.use(setupRoutes);
 
   app.use(async (error: Handler, request: express.Request, response: express.Response) => {
-      console.log('Handling error - App.ts');
       let handler = error;
 
       ShowPrettyError.execute(error);
