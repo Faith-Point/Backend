@@ -1,82 +1,81 @@
 export const LOG_EXCEPTION = {
 	name: 'log_exception',
 	columns: [
-		{
-			name: 'id',
-			type: 'varchar',			
-			isPrimary: true,
-			generationStrategy: 'uuid',
-		},
-		{
-			name: 'message',
-			type: 'varchar',
-			precision: 256,
-			isNullable: true,
-		},
-		{
-			name: 'code',
-			type: 'varchar',
-			precision: 8,
-			isNullable: true,
-		},
-		{
-			name: 'type',
-			type: 'varchar',
-			precision: 128,
-			isNullable: true,
-			comment: 'type exception example: "Exception, Celebrate, AuthError".',
-		},
-		{
-			name: 'stack',
-			type: 'varchar',
-			isNullable: true,
-		},
-		{
-			name: 'agent',
-			type: 'varchar',
-			precision: 128,
-			isNullable: true,
-		},
-		{
-			name: 'ip',
-			type: 'varchar',
-			isNullable: true,
-		},
-		{
-			name: 'url',
-			type: 'varchar',
-			precision: 128,
-			isNullable: true,
-		},
-		{
-			name: 'method',
-			type: 'varchar',
-			precision: 64,
-			isNullable: true,
-		},
-		{
-			name: 'data',
-			type: 'text',
-			isNullable: true,
-		},
-		{
-			name: 'created_at',
-			type: 'timestamp',
-			default: 'now()',
-			isNullable: true,
-		},
-		{
-			name: 'updated_at',
-			type: 'timestamp',
-			default: 'null',
-			isNullable: true,
-		},
-		{
-			name: 'deleted_at',
-			type: 'timestamp',
-			default: 'null',
-			isNullable: true,
-		},
+			{
+					name: 'id',
+					type: 'uuid',
+					isPrimary: true,
+					generationStrategy: 'uuid',
+			},
+			{
+					name: 'message',
+					type: 'varchar',
+					length: 255,
+					isNullable: true,
+			},
+			{
+					name: 'code',
+					type: 'varchar',
+					length: 10,
+					isNullable: true,
+			},
+			{
+					name: 'type',
+					type: 'varchar',
+					length: 128,
+					isNullable: true,
+					comment: 'type exception example: "Exception, Celebrate, AuthError".',
+			},
+			{
+					name: 'stack',
+					type: 'text',
+					isNullable: true,
+			},
+			{
+					name: 'agent',
+					type: 'varchar',
+					length: 128,
+					isNullable: true,
+			},
+			{
+					name: 'ip',
+					type: 'varchar',
+					length: 45,
+					isNullable: true,
+			},
+			{
+					name: 'url',
+					type: 'varchar',
+					length: 255,
+					isNullable: true,
+			},
+			{
+					name: 'method',
+					type: 'varchar',
+					length: 64,
+					isNullable: true,
+			},
+			{
+					name: 'data',
+					type: 'text',
+					isNullable: true,
+			},
+			{
+					name: 'created_at',
+					type: 'timestamp',
+					default: 'now()',
+					isNullable: true,
+			},
+			{
+					name: 'updated_at',
+					type: 'timestamp',
+					isNullable: true,
+			},
+			{
+					name: 'deleted_at',
+					type: 'timestamp',
+					isNullable: true,
+			},
 	],
 };
 
