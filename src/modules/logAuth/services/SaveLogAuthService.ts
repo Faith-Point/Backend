@@ -19,7 +19,6 @@ class SaveLogAuthService {
     };
 
     await this.logAuthRepository.register(logAuth);
-    console.log('SaveLogAuthService.execute logAuthRepository.register executed', logAuth);
   }
 }
 
