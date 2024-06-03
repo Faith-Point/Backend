@@ -7,7 +7,7 @@ import userRouter from '@modules/user/infra/http/routes/user.routes';
 import authRouter from '@modules/auth/infra/http/routes/auth.routes';
 import faithPoint from '@modules/faithPoint/faith_point/infra/http/routes/FaithPoint.routes';
 import faithPointImage from '@modules/faithPoint/image/infra/http/routes/FaithPointImage.routes';
-// import faithPointRating from '@modules/faithPoint/rating/infra/http/routes/faithPointRating.routes';
+import faithPointRating from '@modules/faithPoint/rating/infra/http/routes/FaithPointRating.routes';
 import faithPointReligions from '@modules/faithPoint/religions/infra/http/routes/Religion.routes';
 import faithPointSchedule from '@modules/faithPoint/schedule/infra/http/routes/FaithPointSchedule.routes';
 import faithPointService from '@modules/faithPoint/service/infra/http/routes/FaithPointService.routes';
@@ -25,7 +25,7 @@ const route = {
     authRouter,
     faithPoint,
     faithPointImage,
-    // faithPointRating,
+    faithPointRating,
     faithPointReligions,
     faithPointSchedule,
     faithPointService,

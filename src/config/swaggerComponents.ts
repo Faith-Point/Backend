@@ -413,6 +413,46 @@ export const swaggerComponents = {
           }
         },        
       },
+      FaithPointRating: {
+        type: 'object',
+        properties: {
+          faith_point: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          user: {
+            type: 'object',
+            properties: {
+              id: {
+                type: 'string',
+                maxLength: 32,
+              }
+            }
+          },
+          rating: {
+            type: 'number',
+          },
+          comment: {
+            type: 'string',
+            maxLength: 255,
+          },
+        },    
+        example: {
+          faith_point: {
+            id: 'uuid',
+          },
+          user: {
+            id: 'uuid',
+          },
+          rating: 5,
+          comment: 'Excellent',          
+        }    
+      },
     },
   },
 };

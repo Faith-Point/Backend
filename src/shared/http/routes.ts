@@ -20,7 +20,7 @@ router.use('/user', route.userRouter);
 router.use('/auth', route.authRouter);
 router.use('/faithPoint', route.faithPoint);
 router.use('/faithPointImage', route.faithPointImage);
-// router.use('/faithPoint/Rating', route.faithPointRating);
+router.use('/faithPointRating', route.faithPointRating);
 router.use('/faithPointReligions', route.faithPointReligions);
 router.use('/faithPointSchedule', route.faithPointSchedule);
 router.use('/faithPointService', route.faithPointService);
