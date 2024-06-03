@@ -10,7 +10,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Schedule:
+ * /faithPointSchedule:
  *   post:
  *     tags: [FaithPointSchedule]
  *     summary: Create a new faithPointSchedule
@@ -35,7 +35,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Schedule/{id}:
+ * /faithPointSchedule/{id}:
  *   put:
  *     tags: [FaithPointSchedule]
  *     summary: Update a faithPointSchedule
@@ -67,7 +67,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Schedule/{id}:
+ * /faithPointSchedule/{id}:
  *   delete:
  *     tags: [FaithPointSchedule]
  *     summary: Delete a faithPointSchedule
@@ -93,7 +93,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Schedule:
+ * /faithPointSchedule:
  *   get:
  *     tags: [FaithPointSchedule]
  *     summary: Find all faithPointSchedule
@@ -112,7 +112,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Schedule/{id}:
+ * /faithPointSchedule/{id}:
  *   get:
  *     tags: [FaithPointSchedule]
  *     summary: Find faithPointSchedule by id
@@ -138,7 +138,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Schedule/{date}:
+ * /faithPointSchedule/{date}:
  *   get:
  *     tags: [FaithPointSchedule]
  *     summary: Find faithPointSchedule by date
@@ -164,7 +164,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Schedule/{faith_point}:
+ * /faithPointSchedule/{faith_point}:
  *   get:
  *     tags: [FaithPointSchedule]
  *     summary: Find faithPointSchedule by faith_point

@@ -10,7 +10,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Image:
+ * /faithPointImage:
  *   post:
  *     tags: [Faith Point Image]
  *     summary: Create a new faith point image
@@ -35,7 +35,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Image/{id}:
+ * /faithPointImage/{id}:
  *   put:
  *     tags: [Faith Point Image]
  *     summary: Update a faith point image
@@ -67,7 +67,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Image/{id}:
+ * /faithPointImage/{id}:
  *   delete:
  *     tags: [Faith Point Image]
  *     summary: Delete a faith point image
@@ -93,7 +93,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Image:
+ * /faithPointImage:
  *   get:
  *     tags: [Faith Point Image]
  *     summary: Find all faith point images
@@ -112,7 +112,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Image/{id}:
+ * /faithPointImage/{id}:
  *   get:
  *     tags: [Faith Point Image]
  *     summary: Find all faith point images
@@ -131,7 +131,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Image/faithPoint/{id}:
+ * /faithPointImage/faithPoint/{id}:
  *   get:
  *     tags: [Faith Point Image]
  *     summary: Find faith point images by faith point id

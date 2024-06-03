@@ -24,10 +24,10 @@ class FaithPointSchedule implements IFaithPointSchedule {
     @Column()
     date: Date;
 
-    @Column()
+    @Column({ type: 'time', nullable: true})
     start_time: Date;
 
-    @Column()
+    @Column({ type: 'time', nullable: true})
     end_time: Date;
 
     @CreateDateColumn()

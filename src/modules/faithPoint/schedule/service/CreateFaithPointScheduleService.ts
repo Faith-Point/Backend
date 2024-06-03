@@ -17,14 +17,12 @@ class CreateFaithPointScheduleService {
             throw new AppError('Missing required parameters: faith_point_id or date');
         }
         const dateTimeNow = new Date();
-        const startTime = new Date(`${parameters.date}T${parameters.start_time}`);
-        const endTime = new Date(`${parameters.date}T${parameters.end_time}`);
         const newFaithPointSchedule = await this.faithPointScheduleRepository.create({
             id: uuidv4(),
             faith_point: parameters.faith_point,
             date: parameters.date,
-            start_time: startTime,
-            end_time: endTime,
+            start_time: parameters.start_time,
+            end_time: parameters.end_time,
             created_at: dateTimeNow,
         });
         return newFaithPointSchedule;

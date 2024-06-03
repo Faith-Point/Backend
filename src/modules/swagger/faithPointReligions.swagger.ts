@@ -10,7 +10,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Religions:
+ * /faithPointReligions:
  *   post:
  *     tags: [FaithPointReligions]
  *     summary: Create a new faithPointReligion
@@ -35,7 +35,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Religions/{id}:
+ * /faithPointReligions/{id}:
  *   put:
  *     tags: [FaithPointReligions]
  *     summary: Update a faithPointReligion
@@ -65,7 +65,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Religions/{id}:
+ * /faithPointReligions/{id}:
  *   delete:
  *     tags: [FaithPointReligions]
  *     summary: Delete a faithPointReligion
@@ -89,7 +89,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Religions:
+ * /faithPointReligions:
  *   get:
  *     tags: [FaithPointReligions]
  *     summary: Get all faithPointReligions
@@ -106,7 +106,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Religions/{id}:
+ * /faithPointReligions/{id}:
  *   get:
  *     tags: [FaithPointReligions]
  *     summary: Get faithPointReligion by id
@@ -130,7 +130,7 @@
 /**
  * @swagger
  * path:
- * /faithPoint/Religions/findByName/{name}:
+ * /faithPointReligions/findByName/{name}:
  *   get:
  *     tags: [FaithPointReligions]
  *     summary: Get faithPointReligion by name

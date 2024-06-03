@@ -355,7 +355,15 @@ export const swaggerComponents = {
             type: 'string',
             format: 'time',
           },
-        },        
+        },  
+        example: {
+          faith_point: {
+            id: 'uuid',
+          },
+          date: '2024-06-02',
+          start_time: '2024-06-02T15:00:00',
+          end_time: '2024-06-02T15:00:00',
+        }      
       },
     },
   },
