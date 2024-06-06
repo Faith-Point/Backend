@@ -1,6 +1,6 @@
 {
   "type": "postgres",
-  "host": "localhost",
+  "host": "faith-point",
   "port": 5432,
   "username": "postgres",
   "password": "postgres",
