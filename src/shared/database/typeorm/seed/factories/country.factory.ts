@@ -7,14 +7,10 @@ import { faker } from '@faker-js/faker';
 define(Country, () => {
     const country = new Country();
     country.id = uuidv4();
-
     const shortCountries = Object.values(shortCountry) as shortCountry[];
     const randomIndex = Math.floor(Math.random() * shortCountries.length);
     country.short_name = shortCountries[randomIndex];
-
-    // Usando as funções corretas do módulo location
     country.long_name = faker.location.country();
     country.code = faker.location.countryCode();
-
     return country;
 });
