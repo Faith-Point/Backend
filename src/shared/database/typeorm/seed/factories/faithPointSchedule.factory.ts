@@ -20,6 +20,8 @@ define(
     faithPointSchedule.id = uuidv4();
     faithPointSchedule.faith_point = context.faithPoint;
     faithPointSchedule.date = new Date();
+    faithPointSchedule.start_time = new Date();
+    faithPointSchedule.end_time = new Date();
 
     return faithPointSchedule;
   }
