@@ -12,7 +12,7 @@ define(FaithPointRating, (_fakes: typeof Faker, context?: { faithPoint: FaithPoi
 
   const faithPointRating = new FaithPointRating();
   faithPointRating.id = uuidv4();
-  faithPointRating.rating = faker.number.int();
+  faithPointRating.rating = faker.number.int(({ min: 1, max: 10 }));
   faithPointRating.comment = faker.lorem.sentence();
   faithPointRating.user = context.user;
   faithPointRating.faithPoint = context.faithPoint;

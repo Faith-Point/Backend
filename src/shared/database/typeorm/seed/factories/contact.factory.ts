@@ -11,7 +11,7 @@ define(Contact, () => {
     const contact = new Contact();
     contact.id = uuidv4();
     contact.name = truncateString(faker.person.fullName(), 20);
-    contact.phone = faker.phone.number();
+    contact.phone = truncateString(faker.phone.number(), 20);
     contact.email = truncateString(faker.internet.email(), 20);
     return contact;
 });
