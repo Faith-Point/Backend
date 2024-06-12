@@ -29,6 +29,6 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "skipDefaultLibCheck": true
+    "skipDefaultLibCheck": true,
   }
 }

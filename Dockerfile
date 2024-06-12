@@ -19,4 +19,4 @@ RUN yarn build
 EXPOSE 3308
 
 
-CMD ["sh", "-c", "yarn typeorm migration:run -d /app/src/config/data-source.ts && yarn start"]
+CMD ["sh", "-c", "yarn typeorm migration:run -d /app/src/config/data-source.ts && yarn seed && yarn start"]
