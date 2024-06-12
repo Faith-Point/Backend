@@ -349,11 +349,11 @@ export const swaggerComponents = {
           },
           start_time: {
             type: 'string',
-            format: 'time',
+            format: 'date',
           },
           end_time: {
             type: 'string',
-            format: 'time',
+            format: 'date',
           },
         },  
         example: {
@@ -361,8 +361,8 @@ export const swaggerComponents = {
             id: 'uuid',
           },
           date: '2024-06-02',
-          start_time: '2024-06-02T15:00:00',
-          end_time: '2024-06-02T15:00:00',
+          start_time: '2024-06-02',
+          end_time: '2024-06-02',
         }      
       },
       FaithPointService: {
