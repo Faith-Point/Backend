@@ -13,10 +13,10 @@
     "./src/shared/database/typeorm/migrations/*.ts"
   ],
   "seeds": [
-    "src/shared/database/typeorm/seeding/seeds/*.ts"
+    "src/shared/database/typeorm/seed/seeds/*.ts"
   ],
   "factories": [
-    "src/shared/database/typeorm/seeding/factories/*.ts"
+    "src/shared/database/typeorm/seed/factories/*.ts"
   ],
   "cli": {
     "migrationsDir": "./src/shared/database/typeorm/migrations"
