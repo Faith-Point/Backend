@@ -37,11 +37,11 @@ jobs:
           git branch -r
 
           echo "Defined branch patterns to delete:"
-          BRANCH_PATTERNS=("origin/features/" "origin/hotfix/" "origin/fix/" "origin/chore/" "origin/docs/" "origin/release/")
+          BRANCH_PATTERNS=("origin/feature/" "origin/hotfix/" "origin/fix/" "origin/chore/" "origin/docs/" "origin/release/")
           for PATTERN in "${BRANCH_PATTERNS[@]}"; do
             echo "Processing pattern: $PATTERN"
             echo "Listing branches matching pattern $PATTERN"
-            BRANCHES=$(git branch -r | grep "$PATTERN" | grep -v 'origin/features/deleteBranches' || true)
+            BRANCHES=$(git branch -r | grep "$PATTERN" | grep -v 'origin/feature/deleteBranches' || true)
             echo "Found branches: $BRANCHES"
             if [ -z "$BRANCHES" ]; then
               echo "No branches found for pattern $PATTERN, continuing..."
