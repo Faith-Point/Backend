@@ -13,13 +13,13 @@ This document describes a Git workflow to manage development (`develop`), stagin
 
 ### 1.3. Pull Request (PR) to `develop`
 - After completing the feature development, create a PR from the `feature/newFeature` branch to the `develop` branch.
-- After code review, merge the PR into the `develop` branch.
+- Use **Squash and Merge** to combine all commits from the feature branch into a single commit before merging into `develop`. This keeps the `develop` history clean and organized.
 
 ## 2. Testing in Staging (`homolog`)
 
 ### 2.1. PR from `develop` to `homolog`
 - After merging the `feature/newFeature` PR into `develop`, create a PR from the `develop` branch to the `homolog` branch.
-- After code review and confirming the feature is ready for testing, merge the PR into the `homolog` branch.
+- Use **Create a Merge Commit** to preserve the complete history and create a clear merge commit. This helps track the integration of changes from `develop` to `homolog`.
 
 ### 2.2. Testing on the `homolog` Branch
 - Conduct thorough testing on the `homolog` branch to ensure the new feature works correctly and does not introduce bugs.
@@ -36,17 +36,17 @@ This document describes a Git workflow to manage development (`develop`), stagin
 
 ### 3.3. PR of Fixes to `develop`
 - After making the fixes, create a new PR from the `feature/newFeature` branch to the `develop` branch.
-- After code review, merge the PR into the `develop` branch.
+- After code review, use **Squash and Merge** to combine all commits from the feature branch into a single commit before merging into `develop`.
 
 ### 3.4. PR from `develop` to `homolog` and Retest
 - After merging the fixes into `develop`, create a PR from `develop` to `homolog` and repeat the tests.
-- Continue this cycle until the feature passes tests in `homolog`.
+- Use **Create a Merge Commit** to preserve the complete history and create a clear merge commit.
 
 ## 4. Deploy to Production (`production`)
 
 ### 4.1. PR from `homolog` to `production`
 - After validation in `homolog`, create a PR from the `homolog` branch to the `production` branch.
-- After code review and confirming the feature is ready for production, merge the PR into the `production` branch.
+- Use **Create a Merge Commit** to preserve the complete history and create a clear merge commit. This ensures that the production branch has a clear record of when changes were integrated.
 
 ## 5. Synchronization of Branches (Optional)
 
