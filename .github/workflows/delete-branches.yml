@@ -34,7 +34,7 @@ jobs:
             BRANCHES=$(git branch -r | grep "$PATTERN" | grep -v 'origin/feature/deleteBranches')
             for BRANCH in $BRANCHES; do
               BRANCH_NAME=${BRANCH#*/}
-              if ! git branch -r --contains origin/feature/deleteBranches | grep -q $BRANCH_NAME; then
+              if ! git branch -r --contains origin/production | grep -q $BRANCH_NAME; then
                 echo "Deleting branch: $BRANCH_NAME"
                 git push origin --delete $BRANCH_NAME
               fi
