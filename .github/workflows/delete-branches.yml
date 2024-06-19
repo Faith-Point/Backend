@@ -14,29 +14,38 @@ jobs:
 
       - name: Configure Git
         run: |
+          echo "Configuring Git user..."
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-
+          echo "Git user configured."
+      
       - name: Delete Merged Branches
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
+          echo "Setting default branch to production..."
           git config --global init.defaultBranch production
-          git fetch --all
-
-          # Set up Git to use the personal access token
-          git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
-
-          # Define branch patterns to delete
-          BRANCH_PATTERNS=("origin/feature/" "origin/hotfix/" "origin/fix/" "origin/chore/" "origin/docs/" "origin/release/")
           
+          echo "Fetching all branches..."
+          git fetch --all
+          
+          echo "Setting remote URL with personal access token..."
+          git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
+          
+          echo "Defined branch patterns to delete:"
+          BRANCH_PATTERNS=("origin/feature/" "origin/hotfix/" "origin/fix/" "origin/chore/" "origin/docs/" "origin/release/")
           for PATTERN in "${BRANCH_PATTERNS[@]}"; do
+            echo "Processing pattern: $PATTERN"
             BRANCHES=$(git branch -r | grep "$PATTERN" | grep -v 'origin/feature/deleteBranches')
             for BRANCH in $BRANCHES; do
               BRANCH_NAME=${BRANCH#*/}
+              echo "Checking branch: $BRANCH_NAME"
               if ! git branch -r --contains origin/production | grep -q $BRANCH_NAME; then
                 echo "Deleting branch: $BRANCH_NAME"
-                git push origin --delete $BRANCH_NAME
+                git push origin --delete $BRANCH_NAME || echo "Failed to delete branch: $BRANCH_NAME"
+              else
+                echo "Branch $BRANCH_NAME is contained in production, skipping..."
               fi
             done
           done
+          echo "Branch deletion process completed."
