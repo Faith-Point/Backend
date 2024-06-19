@@ -23,26 +23,27 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
+          set -e
           echo "Setting default branch to production..."
           git config --global init.defaultBranch production
           
           echo "Fetching all branches..."
-          git fetch --all
+          git fetch --all || { echo "Failed to fetch branches"; exit 1; }
           
           echo "Setting remote URL with personal access token..."
-          git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git || { echo "Failed to set remote URL"; exit 1; }
           
           echo "Defined branch patterns to delete:"
           BRANCH_PATTERNS=("origin/feature/" "origin/hotfix/" "origin/fix/" "origin/chore/" "origin/docs/" "origin/release/")
           for PATTERN in "${BRANCH_PATTERNS[@]}"; do
             echo "Processing pattern: $PATTERN"
-            BRANCHES=$(git branch -r | grep "$PATTERN" | grep -v 'origin/feature/deleteBranches')
+            BRANCHES=$(git branch -r | grep "$PATTERN" | grep -v 'origin/feature/deleteBranches') || { echo "Failed to list branches for pattern $PATTERN"; exit 1; }
             for BRANCH in $BRANCHES; do
               BRANCH_NAME=${BRANCH#*/}
               echo "Checking branch: $BRANCH_NAME"
               if ! git branch -r --contains origin/production | grep -q $BRANCH_NAME; then
                 echo "Deleting branch: $BRANCH_NAME"
-                git push origin --delete $BRANCH_NAME || echo "Failed to delete branch: $BRANCH_NAME"
+                git push origin --delete $BRANCH_NAME || { echo "Failed to delete branch: $BRANCH_NAME"; exit 1; }
               else
                 echo "Branch $BRANCH_NAME is contained in production, skipping..."
               fi
