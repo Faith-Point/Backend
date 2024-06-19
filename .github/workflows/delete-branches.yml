@@ -38,9 +38,12 @@ jobs:
           for PATTERN in "${BRANCH_PATTERNS[@]}"; do
             echo "Processing pattern: $PATTERN"
             echo "Listing branches matching pattern $PATTERN"
-            git branch -r | grep "$PATTERN" || { echo "Failed to list branches for pattern $PATTERN"; exit 1; }
-            BRANCHES=$(git branch -r | grep "$PATTERN" | grep -v 'origin/feature/deleteBranches') || { echo "Failed to list branches for pattern $PATTERN"; exit 1; }
+            BRANCHES=$(git branch -r | grep "$PATTERN" | grep -v 'origin/feature/deleteBranches' || true)
             echo "Found branches: $BRANCHES"
+            if [ -z "$BRANCHES" ]; then
+              echo "No branches found for pattern $PATTERN, continuing..."
+              continue
+            fi
             for BRANCH in $BRANCHES; do
               BRANCH_NAME=${BRANCH#*/}
               echo "Checking branch: $BRANCH_NAME"
