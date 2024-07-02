@@ -32,7 +32,7 @@ services:
       - faith-point-redis
     restart: on-failure
 
-  faith-point:
+  faithpoint:
     image: postgres:13.3-alpine
     container_name: faithpoint
     environment:
