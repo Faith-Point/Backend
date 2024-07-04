@@ -20,9 +20,11 @@ COPY package.json yarn.lock tsconfig.json ./
 RUN yarn install --frozen-lockfile
 
 COPY src /app/src
-COPY ormconfig.json /app/ormconfig.json
+COPY ormconfig.ts /app/ormconfig.ts
+COPY src/config/cli.ts /app/src/config/cli.ts
 COPY src/config/init-db.sh /app/src/config/init-db.sh
 COPY src/config/data-source.ts /app/src/config/data-source.ts
+COPY src/config/seed.ts /app/src/config/seed.ts
 
 RUN yarn build
 

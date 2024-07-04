@@ -9,7 +9,7 @@ const database = {
       port: parseInt(process.env.DB_PORT || '5432', 10),
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
-      database: process.env.DB_NAME || 'faithpoint',
+      database: process.env.DB_NAME || 'faith-point',
       schema: process.env.DB_SCHEMA || 'public',
       synchronize: true,
       logging: true,
