@@ -40,7 +40,7 @@ services:
     volumes:
       - faith-point-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "3333:5432"
     networks:
       - faith-point-network
     restart: on-failure

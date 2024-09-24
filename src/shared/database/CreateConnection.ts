@@ -36,7 +36,7 @@ class CreateConnection {
       name: connection.name || 'faith-point',
       type: connection.type || 'postgres',
       host: connection.host || 'faith-point',
-      port: connection.port || 5432,
+      port: connection.port || 3333,
       database: connection.database || 'faith-point',
       password: connection.password || 'postgres',
       username: connection.username || 'postgres',

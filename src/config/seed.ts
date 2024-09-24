@@ -23,8 +23,8 @@ dotenv.config();
 const runSeeds = async () => {
   const dataSourceConfig: DataSourceOptions = {
     type: 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5433', 10), // Porta 5433 como esperado
+    host: process.env.DB_HOST || 'faith-point',
+    port: parseInt(process.env.DB_PORT || '3333', 10), // Porta 3333 como esperado
     username: process.env.DB_USERNAME || 'postgres',
     password: process.env.DB_PASSWORD || 'postgres',
     database: process.env.DB_NAME || 'faith-point',
