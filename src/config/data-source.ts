@@ -1,11 +1,30 @@
-import 'reflect-metadata';
-import { DataSource } from 'typeorm';
-import ormConfig from '../../ormconfig';
-import dotenv from 'dotenv';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const AppDataSource = new DataSource(ormConfig);
+const dataSourceConfig: DataSourceOptions = {
+  type: 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  port: parseInt(process.env.DB_PORT || '5433', 10), // Porta 5433 como esperado
+  username: process.env.DB_USERNAME || 'postgres',
+  password: process.env.DB_PASSWORD || 'postgres',
+  database: process.env.DB_NAME || 'faith-point',
+  entities: [
+    "./src/modules/**/infra/typeorm/entities/*.ts",
+    "./src/modules/shared/**/infra/typeorm/entities/*.ts"
+  ],
+  migrations: [
+    "./src/shared/database/typeorm/migrations/*.ts"
+  ],
+  logging: true,
+};
+
+console.log('Connecting to DB with these configurations:', dataSourceConfig);
+console.log('Environment Variables:', process.env.DB_USERNAME, process.env.DB_PASSWORD);
+
+// Cria a fonte de dados diretamente usando as configurações acima
+const AppDataSource = new DataSource(dataSourceConfig);
 
 export const initializeDataSource = async () => {
   try {

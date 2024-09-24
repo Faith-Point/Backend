@@ -1,8 +1,7 @@
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
-import { runSeeder } from 'typeorm-seeding';
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { runSeeder, useSeeding } from 'typeorm-seeding';
 import dotenv from 'dotenv';
-import ormConfig from '../../ormconfig';
 import CreateCountries from '@shared/database/typeorm/seed/seeds/0001-contries.seed';
 import CreateStates from '@shared/database/typeorm/seed/seeds/0002-states.seed';
 import CreateCities from '@shared/database/typeorm/seed/seeds/0003-city.seed';
@@ -22,11 +21,30 @@ import CreateFaithPointRatings from '@shared/database/typeorm/seed/seeds/0015-fa
 dotenv.config();
 
 const runSeeds = async () => {
-  const AppDataSource = new DataSource(ormConfig);
-
+  const dataSourceConfig: DataSourceOptions = {
+    type: 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    port: parseInt(process.env.DB_PORT || '5433', 10), // Porta 5433 como esperado
+    username: process.env.DB_USERNAME || 'postgres',
+    password: process.env.DB_PASSWORD || 'postgres',
+    database: process.env.DB_NAME || 'faith-point',
+    entities: [
+      "./src/modules/**/infra/typeorm/entities/*.ts",
+      "./src/modules/shared/**/infra/typeorm/entities/*.ts"
+    ],
+    migrations: [
+      "./src/shared/database/typeorm/migrations/*.ts"
+    ],
+    logging: true,
+  };
+  
   try {
+    const AppDataSource = new DataSource(dataSourceConfig);
     await AppDataSource.initialize();
     console.log('Data Source has been initialized!');
+    await useSeeding();
+
+    console.log('Metadata loaded for entities:', AppDataSource.entityMetadatas.map(e => e.name));
     
     await runSeeder(CreateCountries);
     await runSeeder(CreateStates);
@@ -47,8 +65,6 @@ const runSeeds = async () => {
     console.log('Seeders have been executed successfully.');
   } catch (error) {
     console.error('Error running seeders:', error);
-  } finally {
-    await AppDataSource.destroy();
   }
 };
 

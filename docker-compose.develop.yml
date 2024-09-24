@@ -28,7 +28,6 @@ services:
       - faith-point-network
     depends_on:
       - faith-point
-      - faith-point-redis
     restart: on-failure
 
   faith-point:
@@ -40,7 +39,6 @@ services:
       - POSTGRES_DB=${DB_NAME}
     volumes:
       - faith-point-data:/var/lib/postgresql/data
-      - ./src/config/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
     ports:
       - "5432:5432"
     networks:
