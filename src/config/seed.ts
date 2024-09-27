@@ -19,8 +19,9 @@ import CreateFaithPointServices from '@shared/database/typeorm/seed/seeds/0013-f
 import CreateFaithPointSubscription from '@shared/database/typeorm/seed/seeds/0014-faithPointSubscription.seed';
 import CreateFaithPointRatings from '@shared/database/typeorm/seed/seeds/0015-faithPointRating.seed';
 
-dotenv.config();
-
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 const runSeeds = async () => {
   const dataSourceConfig: DataSourceOptions = {
     type: 'postgres',
