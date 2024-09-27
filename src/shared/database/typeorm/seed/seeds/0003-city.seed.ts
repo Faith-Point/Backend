@@ -1,36 +1,41 @@
-import { Seeder, Factory } from "typeorm-seeding";
-import State from "@modules/shared/state/infra/typeorm/entities/State";
-import AppDataSource from "@config/data-source";
-import log from "@shared/logger";
-import City from "@modules/shared/city/infra/typeorm/entities/City";
-import createStates from "@shared/database/typeorm/seed/seeds/0002-states.seed";
-import {
-  initializeDataSource,
-  destroyDataSource,
-} from "@shared/util/data-source-manager";
+import { DataSource } from 'typeorm';
+import { Seeder } from 'typeorm-extension';
+import City from '@modules/shared/city/infra/typeorm/entities/City';
+import State from '@modules/shared/state/infra/typeorm/entities/State';
+import log from '@shared/logger';
+import { v4 as uuidv4 } from 'uuid';
+import { faker } from '@faker-js/faker';
+import CreateStates from '@shared/database/typeorm/seed/seeds/0002-states.seed';
 
 export default class CreateCities implements Seeder {
-  public async run(factory: Factory): Promise<any> {
-    await initializeDataSource();
-    const stateRepository = AppDataSource.getRepository(State);
+  public async run(dataSource: DataSource): Promise<void> {
+    const stateRepository = dataSource.getRepository(State);
     let states = await stateRepository.find();
 
     if (states.length === 0) {
-      await createStates;
+      await new CreateStates().run(dataSource);
       states = await stateRepository.find();
     }
 
-    const cityRepository = AppDataSource.getRepository(City);
-    const city = await cityRepository.find();
+    const cityRepository = dataSource.getRepository(City);
+    const cities = await cityRepository.find();
 
-    if (city.length > 0) {
-      log.warn("Cities already seeded.");
-      await AppDataSource.destroy();
+    if (cities.length > 0) {
+      log.warn('Cities already seeded.');
     } else {
       for (const state of states) {
-        await factory(City)({ state }).createMany(5);
+        const cityEntities = Array.from({ length: 5 }).map(() => {
+          const city = new City();
+          city.id = uuidv4();
+          city.short_name = faker.location.city();
+          city.long_name = faker.location.city();
+          city.code = faker.location.zipCode();
+          city.state = state;
+          return city;
+        });
+        await cityRepository.save(cityEntities);
       }
+      log.info('Cities seeded.');
     }
-    await destroyDataSource();
   }
 }

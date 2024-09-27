@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { runSeeder, useSeeding } from 'typeorm-seeding';
+import { useSeeding } from 'typeorm-seeding';
+import { runSeeders } from 'typeorm-extension'
 import dotenv from 'dotenv';
 import CreateCountries from '@shared/database/typeorm/seed/seeds/0001-contries.seed';
 import CreateStates from '@shared/database/typeorm/seed/seeds/0002-states.seed';
@@ -24,7 +25,7 @@ const runSeeds = async () => {
   const dataSourceConfig: DataSourceOptions = {
     type: 'postgres',
     host: process.env.DB_HOST || 'faith-point',
-    port: parseInt(process.env.DB_PORT || '3333', 10), // Porta 3333 como esperado
+    port: parseInt(process.env.DB_PORT || '5432', 10), // Porta 5432 como esperado
     username: process.env.DB_USERNAME || 'postgres',
     password: process.env.DB_PASSWORD || 'postgres',
     database: process.env.DB_NAME || 'faith-point',
@@ -45,23 +46,27 @@ const runSeeds = async () => {
     await useSeeding();
 
     console.log('Metadata loaded for entities:', AppDataSource.entityMetadatas.map(e => e.name));
-    
-    await runSeeder(CreateCountries);
-    await runSeeder(CreateStates);
-    await runSeeder(CreateCities);
-    await runSeeder(CreateAddressess);
-    await runSeeder(CreateRoles);
-    await runSeeder(CreateUsers);
-    await runSeeder(CreateSocialMedias);
-    await runSeeder(CreateContact);
-    await runSeeder(CreateReligions);
-    await runSeeder(CreateFaithPoints);
-    await runSeeder(CreateFaithPointImages);
-    await runSeeder(CreateFaithPointSchedules);
-    await runSeeder(CreateFaithPointServices);
-    await runSeeder(CreateFaithPointSubscription);
-    await runSeeder(CreateFaithPointRatings);
 
+    await runSeeders(AppDataSource, {
+      seeds: [
+        CreateCountries,
+        CreateStates,
+        CreateCities,
+        CreateAddressess,
+        CreateRoles,
+        CreateUsers,
+        CreateSocialMedias,
+        CreateContact,
+        CreateReligions,
+        CreateFaithPoints,
+        CreateFaithPointImages,
+        CreateFaithPointSchedules,
+        CreateFaithPointServices,
+        CreateFaithPointSubscription,
+        CreateFaithPointRatings        
+      ]
+    })
+    
     console.log('Seeders have been executed successfully.');
   } catch (error) {
     console.error('Error running seeders:', error);

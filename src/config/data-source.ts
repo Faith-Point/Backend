@@ -1,21 +1,24 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
 const dataSourceConfig: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_HOST || 'faith-point',
-  port: parseInt(process.env.DB_PORT || '3333', 10), // Porta 3333 como esperado
+  port: parseInt(process.env.DB_PORT || '5432', 10),
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD || 'postgres',
   database: process.env.DB_NAME || 'faith-point',
   entities: [
     "./src/modules/**/infra/typeorm/entities/*.ts",
-    "./src/modules/shared/**/infra/typeorm/entities/*.ts"
+    "./src/modules/shared/**/infra/typeorm/entities/*.ts",
+    path.join(__dirname, '..', '**', 'entities', '*.{ts,js}'),
   ],
   migrations: [
-    "./src/shared/database/typeorm/migrations/*.ts"
+    "./src/shared/database/typeorm/migrations/*.ts",
+    path.join(__dirname, '..', 'migrations', '*.{ts,js}'),
   ],
   logging: true,
 };

@@ -1,53 +1,46 @@
-import { Seeder, Factory } from "typeorm-seeding";
-import AppDataSource from "@config/data-source";
-import FaithPoint from "@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint";
-import log from "@shared/logger";
-import FaithPointSubscription from "@modules/faithPoint/subscription/infra/typeorm/entities/FaithPointSubscription";
-import User from "@modules/user/infra/typeorm/entities/User";
-import CreateFaithPoints from "@shared/database/typeorm/seed/seeds/0010-faithPoint.seed";
-import CreateUsers from "@shared/database/typeorm/seed/seeds/0006-user.seed";
-import {
-  initializeDataSource,
-  destroyDataSource,
-} from "@shared/util/data-source-manager";
-
-function getRandomElement<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
+import { DataSource } from 'typeorm';
+import { Seeder } from 'typeorm-extension';
+import FaithPoint from '@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint';
+import FaithPointSubscription from '@modules/faithPoint/subscription/infra/typeorm/entities/FaithPointSubscription';
+import User from '@modules/user/infra/typeorm/entities/User';
+import log from '@shared/logger';
+import { v4 as uuidv4 } from 'uuid';
+import { faker } from '@faker-js/faker';
 
 export default class CreateFaithPointSubscription implements Seeder {
-  public async run(factory: Factory): Promise<any> {
-    await initializeDataSource();
-
-    const faithPointRepository = AppDataSource.getRepository(FaithPoint);
-    let faithPoints = await faithPointRepository.find();
+  public async run(dataSource: DataSource): Promise<void> {
+    const faithPointRepository = dataSource.getRepository(FaithPoint);
+    const faithPoints = await faithPointRepository.find();
 
     if (faithPoints.length === 0) {
-      await CreateFaithPoints;
-      faithPoints = await faithPointRepository.find();
+      log.warn('No FaithPoints found. Please seed FaithPoints first.');
+      return;
     }
-    const randomFaithPoint = getRandomElement(faithPoints);
 
-    const userRepository = AppDataSource.getRepository(User);
-    let users = await userRepository.find();
+    const userRepository = dataSource.getRepository(User);
+    const users = await userRepository.find();
 
     if (users.length === 0) {
-      await CreateUsers;
-      users = await userRepository.find();
+      log.warn('No Users found. Please seed Users first.');
+      return;
     }
-    const randomUser = getRandomElement(users);
 
-    const faithPointSubscriptionsRepository = AppDataSource.getRepository(FaithPointSubscription);
-    const faithPointSubscriptions = await faithPointSubscriptionsRepository.find();
+    const faithPointSubscriptionRepository = dataSource.getRepository(FaithPointSubscription);
+    const faithPointSubscriptions = await faithPointSubscriptionRepository.find();
 
     if (faithPointSubscriptions.length > 0) {
-      log.warn("FaithPointSubscriptions already seeded.");
+      log.warn('FaithPointSubscriptions already seeded.');
     } else {
-      for (let i = 0; i < faithPoints.length; i++) {
-        await factory(FaithPointSubscription)({ faithPoint: randomFaithPoint, user: randomUser }).createMany(5);
-      }
+      const faithPointSubscriptionEntities = Array.from({ length: 5 }).map(() => {
+        const subscription = new FaithPointSubscription();
+        subscription.id = uuidv4();
+        subscription.is_active = faker.datatype.boolean();
+        subscription.faith_point = faithPoints[Math.floor(Math.random() * faithPoints.length)];
+        subscription.user = users[Math.floor(Math.random() * users.length)];
+        return subscription;
+      });
+      await faithPointSubscriptionRepository.save(faithPointSubscriptionEntities);
+      log.info('FaithPointSubscriptions seeded.');
     }
-
-    await destroyDataSource();
   }
 }

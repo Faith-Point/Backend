@@ -1,24 +1,26 @@
-import { Seeder, Factory } from "typeorm-seeding";
-import AppDataSource from "@config/data-source";
-import log from "@shared/logger";
-import Role from "@modules/role/infra/typeorm/entities/Role";
-import {
-  initializeDataSource,
-  destroyDataSource,
-} from "@shared/util/data-source-manager";
-
+import { DataSource } from 'typeorm';
+import { Seeder } from 'typeorm-extension';
+import Role from '@modules/role/infra/typeorm/entities/Role';
+import log from '@shared/logger';
+import { v4 as uuidv4 } from 'uuid';
+import { faker } from '@faker-js/faker';
 
 export default class CreateRoles implements Seeder {
-  public async run(factory: Factory): Promise<any> {
-    await initializeDataSource();
-    const roleRepository = AppDataSource.getRepository(Role);
+  public async run(dataSource: DataSource): Promise<void> {
+    const roleRepository = dataSource.getRepository(Role);
     const roles = await roleRepository.find();
 
     if (roles.length > 0) {
-      log.warn("roles already seeded.");
+      log.warn('Roles already seeded.');
     } else {
-      await factory(Role)().createMany(10);
+      const roleEntities = Array.from({ length: 10 }).map(() => {
+        const role = new Role();
+        role.id = uuidv4();
+        role.name = faker.hacker.verb();
+        return role;
+      });
+      await roleRepository.save(roleEntities);
+      log.info('Roles seeded.');
     }
-    await destroyDataSource();
   }
 }

@@ -8,7 +8,7 @@ cmd="$@"
 # Increase wait time to 10 seconds
 timeout=10
 
-until nc -z "$host" 3333; do
+until nc -z "$host" 5432; do
   >&2 echo "Postgres is unavailable - sleeping"
   sleep 1
   timeout=$((timeout-1))

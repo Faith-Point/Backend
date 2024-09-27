@@ -1,37 +1,37 @@
-import { Seeder, Factory } from "typeorm-seeding";
-import AppDataSource from "@config/data-source";
-import FaithPoint from "@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint";
-import log from "@shared/logger";
-import FaithPointService from "@modules/faithPoint/service/infra/typeorm/entities/FaithPointService";
-import CreateFaithPoints from "@shared/database/typeorm/seed/seeds/0010-faithPoint.seed";
-import {
-  initializeDataSource,
-  destroyDataSource,
-} from "@shared/util/data-source-manager";
+import { DataSource } from 'typeorm';
+import { Seeder } from 'typeorm-extension';
+import FaithPoint from '@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint';
+import FaithPointService from '@modules/faithPoint/service/infra/typeorm/entities/FaithPointService';
+import log from '@shared/logger';
+import { v4 as uuidv4 } from 'uuid';
+import { faker } from '@faker-js/faker';
 
 export default class CreateFaithPointServices implements Seeder {
-  public async run(factory: Factory): Promise<any> {
-    await initializeDataSource();
-    const faithPointRepository = AppDataSource.getRepository(FaithPoint);
-    let faithPoints = await faithPointRepository.find();
+  public async run(dataSource: DataSource): Promise<void> {
+    const faithPointRepository = dataSource.getRepository(FaithPoint);
+    const faithPoints = await faithPointRepository.find();
 
     if (faithPoints.length === 0) {
-      await CreateFaithPoints;
-      faithPoints = await faithPointRepository.find();
+      log.warn('No FaithPoints found. Please seed FaithPoints first.');
+      return;
     }
 
-    const faithPointServiceRepository =
-      AppDataSource.getRepository(FaithPointService);
+    const faithPointServiceRepository = dataSource.getRepository(FaithPointService);
     const faithPointServices = await faithPointServiceRepository.find();
 
     if (faithPointServices.length > 0) {
-      log.warn("FaithPointServices already seeded.");
-      await AppDataSource.destroy();
+      log.warn('FaithPointServices already seeded.');
     } else {
-      for (const faithPoint of faithPoints) {
-        await factory(FaithPointService)({ faithPoint }).createMany(5);
-      }
+      const faithPointServiceEntities = faithPoints.map(faithPoint => {
+        const service = new FaithPointService();
+        service.id = uuidv4();
+        service.name = faker.lorem.word();
+        service.description = faker.lorem.sentence();
+        service.faith_point = faithPoint;
+        return service;
+      });
+      await faithPointServiceRepository.save(faithPointServiceEntities);
+      log.info('FaithPointServices seeded.');
     }
-    await destroyDataSource();
   }
 }
