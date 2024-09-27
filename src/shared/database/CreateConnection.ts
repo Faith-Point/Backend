@@ -33,14 +33,14 @@ class CreateConnection {
       throw new Error(`Connection with name ${connectionName} not found`);
     }
     return {
-      name: connection.name || 'faith-point',
-      type: connection.type || 'postgres',
-      host: connection.host || 'faith-point',
-      port: connection.port || 5432,
-      database: connection.database || 'faith-point',
-      password: connection.password || 'postgres',
-      username: connection.username || 'postgres',
-      schema: connection.schema || 'public',
+      name: connection.name,
+      type: connection.type,
+      host: connection.host,
+      port: connection.port,
+      database: connection.database,
+      password: connection.password,
+      username: connection.username,
+      schema: connection.schema,
     };
   }
 }
