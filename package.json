@@ -14,7 +14,8 @@
     "seed": "ts-node -r tsconfig-paths/register ./src/config/seed.ts",
     "test": "jest --verbose --runInBand",
     "seed:generate": "ts-node-dev -r tsconfig-paths/register  src/shared/database/typeorm/seed/generateSeed.ts",
-    "start:docker": "docker compose -f docker-compose.develop.yml up --build",
+    "start:docker": "docker-compose -f docker-compose.develop.yml up --build",
+    "start:ubuntu:docker": "docker compose -f docker-compose.develop.yml up --build",
     "eslint-check": "eslint --ext .ts ./src",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix"
