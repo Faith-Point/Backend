@@ -40,5 +40,5 @@ RUN yarn build
 # Expor a porta do aplicativo
 EXPOSE 3308
 
-# Comando de inicialização
-CMD ["sh", "-c", "/app/src/config/wait-for-it.sh faith-point -- yarn typeorm migration:run -d /app/src/config/data-source.ts && yarn seed && yarn start"]
+# Comando de inicialização sem passar o host diretamente
+CMD ["sh", "-c", "/app/src/config/wait-for-it.sh -- yarn typeorm migration:run -d /app/src/config/data-source.ts && yarn seed && yarn start"]
