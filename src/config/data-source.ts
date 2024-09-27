@@ -6,11 +6,11 @@ dotenv.config();
 
 const dataSourceConfig: DataSourceOptions = {
   type: 'postgres',
-  host: process.env.DB_HOST || 'faith-point',
+  host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT || '5432', 10),
-  username: process.env.DB_USERNAME || 'postgres',
-  password: process.env.DB_PASSWORD || 'postgres',
-  database: process.env.DB_NAME || 'faith-point',
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   entities: [
     "./src/modules/**/infra/typeorm/entities/*.ts",
     "./src/modules/shared/**/infra/typeorm/entities/*.ts",
