@@ -37,7 +37,7 @@ const runSeeds = async () => {
     migrations: [
       "./src/shared/database/typeorm/migrations/*.ts"
     ],
-    logging: true,
+    logging: process.env.NODE_ENV === 'development' ? true : false,
   };
   
   try {

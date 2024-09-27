@@ -11,7 +11,7 @@ const database = {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       schema: process.env.DB_SCHEMA,
-      logging: true,
+      logging: process.env.NODE_ENV === 'development' ? true : false,
     },
   ],
 };
