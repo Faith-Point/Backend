@@ -34,6 +34,9 @@ COPY src/config/seed.ts /app/src/config/seed.ts
 COPY src/config/wait-for-it.sh /app/src/config/wait-for-it.sh
 RUN chmod +x /app/src/config/wait-for-it.sh
 
+# Configurar o Node.js para usar uma quantidade de memória heap limitada
+ENV NODE_OPTIONS="--max_old_space_size=400"
+
 # Rodar o build do projeto
 RUN yarn build
 

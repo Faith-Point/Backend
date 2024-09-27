@@ -21,7 +21,7 @@ const dataSourceConfig: DataSourceOptions = {
     "./src/shared/database/typeorm/migrations/*.ts",
     path.join(__dirname, '..', 'migrations', '*.{ts,js}'),
   ],
-  logging: true,
+  logging: process.env.NODE_ENV === 'development' ? true : false,
 };
 
 console.log('Connecting to DB with these configurations:', dataSourceConfig);

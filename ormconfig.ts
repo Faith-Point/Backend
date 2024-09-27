@@ -22,7 +22,7 @@ const ormConfig: PostgresConnectionOptions = {
   migrations: [
     "./src/shared/database/typeorm/migrations/*.ts"
   ],
-  logging: true,
+  logging: process.env.NODE_ENV === 'development' ? true : false,
 };
 
 export default ormConfig;
