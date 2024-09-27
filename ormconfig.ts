@@ -1,10 +1,11 @@
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import * as dotenv from 'dotenv';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
-// Carregue o arquivo .env antes de qualquer coisa
-const envFound = dotenv.config();
-if (envFound.error) {
-  throw new Error("Couldn't find .env file");
+if (process.env.NODE_ENV !== 'production') {
+  const envFound = dotenv.config();
+  if (envFound.error) {
+    throw new Error("Couldn't find .env file");
+  }
 }
 
 const ormConfig: PostgresConnectionOptions = {
@@ -23,14 +24,5 @@ const ormConfig: PostgresConnectionOptions = {
   ],
   logging: true,
 };
-
-console.log('DB Configurations:', {
-  host: ormConfig.host,
-  port: ormConfig.port,
-  username: ormConfig.username,
-  database: ormConfig.database,
-});
-
-console.log('Environment Variables:', process.env.DB_USERNAME, process.env.DB_PASSWORD);
 
 export default ormConfig;
