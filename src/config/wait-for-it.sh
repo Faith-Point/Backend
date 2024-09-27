@@ -1,12 +1,21 @@
 #!/bin/sh
 # wait-for-it.sh
 
-host="$1"
+# Usar a variável de ambiente DB_HOST
+host="${DB_HOST}"
+
+if [ -z "$host" ]; then
+  echo "DB_HOST not set in environment variables. Exiting."
+  exit 1
+fi
+
 shift
 cmd="$@"
 
-# Increase wait time to 10 seconds
-timeout=10
+echo "Checking connection to Postgres at host: $host"
+
+# Aumentar o tempo de espera para 15 segundos para evitar que o script desista muito cedo
+timeout=15
 
 until nc -z "$host" 5432; do
   >&2 echo "Postgres is unavailable - sleeping"
