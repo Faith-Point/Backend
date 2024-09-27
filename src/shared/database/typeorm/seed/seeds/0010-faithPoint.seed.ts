@@ -1,79 +1,51 @@
-import { Seeder, Factory } from "typeorm-seeding";
-import AppDataSource from "@config/data-source";
-import log from "@shared/logger";
-import Address from "@modules/shared/address/infra/typeorm/entities/Address";
-import Religion from "@modules/faithPoint/religions/infra/typeorm/entities/Religion";
-import Contact from "@modules/shared/contact/infra/typeorm/entities/Contact";
-import SocialMedia from "@modules/shared/socialMedia/infra/typeorm/entities/SocialMedia";
-import FaithPoint from "@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint";
-import CreateReligions from "@shared/database/typeorm/seed/seeds/0009-religions.seed";
-import CreateContacts from "@shared/database/typeorm/seed/seeds/0008-contact.seed";
-import CreateSocialMedias from "@shared/database/typeorm/seed/seeds/0007-SocialMedia.seed";
-import CreateAddresses from "@shared/database/typeorm/seed/seeds/0004-address.seed";
-import {
-  initializeDataSource,
-  destroyDataSource,
-} from "@shared/util/data-source-manager";
+import { DataSource } from 'typeorm';
+import { Seeder } from 'typeorm-extension';
+import FaithPoint from '@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint';
+import Religion from '@modules/faithPoint/religions/infra/typeorm/entities/Religion';
+import Address from '@modules/shared/address/infra/typeorm/entities/Address';
+import Contact from '@modules/shared/contact/infra/typeorm/entities/Contact';
+import SocialMedia from '@modules/shared/socialMedia/infra/typeorm/entities/SocialMedia';
+import log from '@shared/logger';
+import { v4 as uuidv4 } from 'uuid';
+import { faker } from '@faker-js/faker';
 
 function getRandomElement<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
 export default class CreateFaithPoints implements Seeder {
-  public async run(factory: Factory): Promise<any> {
-    await initializeDataSource();
+  public async run(dataSource: DataSource): Promise<void> {
+    const religionRepository = dataSource.getRepository(Religion);
+    const religions = await religionRepository.find();
 
-    const religionRepository = AppDataSource.getRepository(Religion);
-    let religions = await religionRepository.find();
+    const addressRepository = dataSource.getRepository(Address);
+    const addresses = await addressRepository.find();
 
-    if (religions.length === 0) {
-      await CreateReligions;
-      religions = await religionRepository.find();
-    }
+    const contactRepository = dataSource.getRepository(Contact);
+    const contacts = await contactRepository.find();
 
-    const contactRepository = AppDataSource.getRepository(Contact);
-    let contacts = await contactRepository.find();
+    const socialMediaRepository = dataSource.getRepository(SocialMedia);
+    const socialMedias = await socialMediaRepository.find();
 
-    if (contacts.length === 0) {
-      await CreateContacts;
-      contacts = await contactRepository.find();
-    }
-    const randomContact = getRandomElement(contacts);
-
-    const socialMediaRepository = AppDataSource.getRepository(SocialMedia);
-    let socialMedias = await socialMediaRepository.find();
-
-    if (socialMedias.length === 0) {
-      await CreateSocialMedias;
-      socialMedias = await socialMediaRepository.find();
-    }
-    const randomSocialMedia = getRandomElement(socialMedias);
-
-    const addressRepository = AppDataSource.getRepository(Address);
-    let addresses = await addressRepository.find();
-
-    if (addresses.length === 0) {
-      await CreateAddresses;
-      addresses = await addressRepository.find();
-    }
-    const randomAddress = getRandomElement(addresses);
-
-    const faithPointRepository = AppDataSource.getRepository(FaithPoint);
+    const faithPointRepository = dataSource.getRepository(FaithPoint);
     const faithPoints = await faithPointRepository.find();
 
     if (faithPoints.length > 0) {
-      log.warn("Faith Points already seeded.");
+      log.warn('Faith Points already seeded.');
     } else {
-      for (const religion of religions) {
-        await factory(FaithPoint)({
-          religion,
-          address: randomAddress,
-          socialMedia: randomSocialMedia,
-          contact: randomContact,
-        }).createMany(5);
-      }
+      const faithPointEntities = Array.from({ length: 5 }).map(() => {
+        const faithPoint = new FaithPoint();
+        faithPoint.id = uuidv4();
+        faithPoint.name = faker.lorem.word();
+        faithPoint.description = faker.lorem.sentence();
+        faithPoint.religion = getRandomElement(religions);
+        faithPoint.address = getRandomElement(addresses);
+        faithPoint.contact = getRandomElement(contacts);
+        faithPoint.socialMedia = getRandomElement(socialMedias);
+        return faithPoint;
+      });
+      await faithPointRepository.save(faithPointEntities);
+      log.info('Faith Points seeded.');
     }
-
-    await destroyDataSource();
   }
 }

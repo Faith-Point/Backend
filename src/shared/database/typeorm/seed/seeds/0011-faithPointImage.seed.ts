@@ -1,37 +1,31 @@
-import { Seeder, Factory } from "typeorm-seeding";
-import AppDataSource from "@config/data-source";
-import FaithPoint from "@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint";
-import log from "@shared/logger";
-import FaithPointImage from "@modules/faithPoint/image/infra/typeorm/entities/FaithPointImage";
-import CreateFaithPoints from "@shared/database/typeorm/seed/seeds/0010-faithPoint.seed";
-import {
-  initializeDataSource,
-  destroyDataSource,
-} from "@shared/util/data-source-manager";
+import { DataSource } from 'typeorm';
+import { Seeder } from 'typeorm-extension';
+import FaithPoint from '@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint';
+import FaithPointImage from '@modules/faithPoint/image/infra/typeorm/entities/FaithPointImage';
+import log from '@shared/logger';
+import { v4 as uuidv4 } from 'uuid';
+import { faker } from '@faker-js/faker';
 
 export default class CreateFaithPointImages implements Seeder {
-  public async run(factory: Factory): Promise<any> {
-    await initializeDataSource();
-    const faithPointRepository = AppDataSource.getRepository(FaithPoint);
-    let faithPoints = await faithPointRepository.find();
+  public async run(dataSource: DataSource): Promise<void> {
+    const faithPointRepository = dataSource.getRepository(FaithPoint);
+    const faithPoints = await faithPointRepository.find();
 
-    if (faithPoints.length === 0) {
-      await CreateFaithPoints;
-      faithPoints = await faithPointRepository.find();
-    }
-
-    const faithPointImageRepository =
-      AppDataSource.getRepository(FaithPointImage);
+    const faithPointImageRepository = dataSource.getRepository(FaithPointImage);
     const faithPointImages = await faithPointImageRepository.find();
 
     if (faithPointImages.length > 0) {
-      log.warn("FaithPointImages already seeded.");
-      await AppDataSource.destroy();
+      log.warn('FaithPointImages already seeded.');
     } else {
-      for (const faithPoint of faithPoints) {
-        await factory(FaithPointImage)({ faithPoint }).createMany(5);
-      }
+      const faithPointImageEntities = Array.from({ length: 5 }).map(() => {
+        const faithPointImage = new FaithPointImage();
+        faithPointImage.id = uuidv4();
+        faithPointImage.url = faker.image.url();
+        faithPointImage.faith_point = faithPoints[Math.floor(Math.random() * faithPoints.length)];
+        return faithPointImage;
+      });
+      await faithPointImageRepository.save(faithPointImageEntities);
+      log.info('FaithPointImages seeded.');
     }
-    await destroyDataSource();
   }
 }

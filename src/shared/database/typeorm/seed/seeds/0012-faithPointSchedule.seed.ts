@@ -1,37 +1,37 @@
-import { Seeder, Factory } from "typeorm-seeding";
-import AppDataSource from "@config/data-source";
-import FaithPoint from "@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint";
-import log from "@shared/logger";
-import FaithPointSchedule from "@modules/faithPoint/schedule/infra/typeorm/entities/FaithPointSchedule";
-import CreateFaithPoints from "@shared/database/typeorm/seed/seeds/0010-faithPoint.seed";
-import {
-  initializeDataSource,
-  destroyDataSource,
-} from "@shared/util/data-source-manager";
+import { DataSource } from 'typeorm';
+import { Seeder } from 'typeorm-extension';
+import FaithPoint from '@modules/faithPoint/faith_point/infra/typeorm/entities/FaithPoint';
+import FaithPointSchedule from '@modules/faithPoint/schedule/infra/typeorm/entities/FaithPointSchedule';
+import log from '@shared/logger';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class CreateFaithPointSchedules implements Seeder {
-  public async run(factory: Factory): Promise<any> {
-    await initializeDataSource();
-    const faithPointRepository = AppDataSource.getRepository(FaithPoint);
-    let faithPoints = await faithPointRepository.find();
+  public async run(dataSource: DataSource): Promise<void> {
+    const faithPointRepository = dataSource.getRepository(FaithPoint);
+    const faithPoints = await faithPointRepository.find();
 
     if (faithPoints.length === 0) {
-      await CreateFaithPoints;
-      faithPoints = await faithPointRepository.find();
+      log.warn('No FaithPoints found. Please seed FaithPoints first.');
+      return;
     }
 
-    const faithPointScheduleRepository =
-      AppDataSource.getRepository(FaithPointSchedule);
+    const faithPointScheduleRepository = dataSource.getRepository(FaithPointSchedule);
     const faithPointSchedules = await faithPointScheduleRepository.find();
 
     if (faithPointSchedules.length > 0) {
-      log.warn("FaithPointSchedules already seeded.");
-      await AppDataSource.destroy();
+      log.warn('FaithPointSchedules already seeded.');
     } else {
-      for (const faithPoint of faithPoints) {
-        await factory(FaithPointSchedule)({ faithPoint }).createMany(5);
-      }
+      const faithPointScheduleEntities = faithPoints.map(faithPoint => {
+        const schedule = new FaithPointSchedule();
+        schedule.id = uuidv4();
+        schedule.faith_point = faithPoint;
+        schedule.date = new Date();
+        schedule.start_time = new Date();
+        schedule.end_time = new Date();
+        return schedule;
+      });
+      await faithPointScheduleRepository.save(faithPointScheduleEntities);
+      log.info('FaithPointSchedules seeded.');
     }
-    await destroyDataSource();
   }
 }
